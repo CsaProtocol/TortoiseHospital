@@ -1,0 +1,11 @@
+.left-side-background{
+    -fx-background-color: #FFFFFF;
+}
+
+.right-side-background{
+    -fx-background-color: #0b1f52;
+}
+
+.cursor_hand{
+    -fx-cursor:hand
+}
