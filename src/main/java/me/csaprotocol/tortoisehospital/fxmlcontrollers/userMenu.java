@@ -1,6 +1,5 @@
 package me.csaprotocol.tortoisehospital.fxmlcontrollers;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,23 +7,18 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import me.csaprotocol.tortoisehospital.Main;
-import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
+import me.csaprotocol.tortoisehospital.controllers.EventController;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtleButton;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class userMenu implements Initializable {
-
-    ControllerOrchestrator co = new ControllerOrchestrator();
-
     @FXML private Button addRecordButton;
     @FXML private Button addTurtleButton;
     @FXML private Button addTurtleButton1;
@@ -42,7 +36,6 @@ public class userMenu implements Initializable {
     @FXML private Label fourthLabelSelected;
     @FXML private Label fifthLabelSelected;
     @FXML private ImageView selectedCenterTank;
-    private ArrayList<Boolean> isSelected = new ArrayList<>();
 
     public void addCenterButton(String CenterID) {
         Button newButton = new Button();
@@ -74,15 +67,23 @@ public class userMenu implements Initializable {
         turtleScroll.getChildren().clear();
     }
 
-    public void addTurtleButton(String TurtleID) {
-        //AnchorPane newButton = new AnchorPane();
+    public void addTurtleButton(String TurtleID, String TurtleName) {
         Node newButton = new Button();
         try {
-            newButton = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/turtleButton.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/turtleButton.fxml")));
+            newButton = loader.load();
+            turtleButton co = loader.getController();
+            co.setIdTurtleLabel(TurtleID);
+            co.setNameTurtleLabel(TurtleName);
         } catch (IOException e) {
             e.printStackTrace();
         }
         turtleScroll.getChildren().add(newButton);
+    }
+
+    public void throwTurtleClickEvent() {
+        EventController co = new EventController();
+        co.throwTurtleEvent();
     }
 
     @Override
@@ -105,8 +106,7 @@ public class userMenu implements Initializable {
     public void setFifthLabel(String toSet, boolean visibility) { this.fifthLabelSelected.setText(toSet);
         this.fifthLabelSelected.setVisible(visibility);}
     public void setSelectedImgToCenter() {
-        System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
-        Image img = new Image(Main.class.getResource("resources/images/centerLogo.png").toString());
+        Image img = new Image(Main.class.getResource("resources/images/center_icon.png").toString());
         this.selectedCenterTank.setImage(img);
     }
     public void setSelectedImgToTank() {

@@ -67,7 +67,7 @@ public class ControllerOrchestrator {
         data.setTurtlesArray(turtles);
 
         for (Turtle turtle : turtles) {
-            currentSceneController.addTurtleButton(turtle.getID());
+            currentSceneController.addTurtleButton(turtle.getID(), turtle.getName());
         }
     }
 
@@ -80,7 +80,7 @@ public class ControllerOrchestrator {
         data.setTurtlesArray(turtles);
 
         for (Turtle turtle : turtles) {
-            currentSceneController.addTurtleButton(turtle.getID());
+            currentSceneController.addTurtleButton(turtle.getID(), turtle.getName());
         }
     }
 
@@ -122,6 +122,7 @@ public class ControllerOrchestrator {
         DaoController dco = new DaoController();
         data.setSelectedTank(dco.getTankByID(tankID, data.getSelectedCenter().getID()));
         userMenu sceneController = data.getCurrentScene().getController();
+        sceneController.setSelectedImgToTank();
         sceneController.setFirstLabel(String.valueOf(tankID));
         sceneController.setSecondLabel(data.getSelectedTank().getCenterID());
         String capacity = "Capacity: " + data.getSelectedTank().getCapacity() + " turtles";

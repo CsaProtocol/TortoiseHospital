@@ -1,33 +1,60 @@
 package me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu;
 
+import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lombok.Setter;
+import me.csaprotocol.tortoisehospital.controllers.EventController;
+import me.csaprotocol.tortoisehospital.events.TurtleClickEvent;
+import me.csaprotocol.tortoisehospital.events.eventbuses.TurtleClickEventBus;
+import org.w3c.dom.events.Event;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class turtleButton {
+public class turtleButton implements Initializable {
 
+    @Setter private boolean isSelected = false;
     @FXML private Label idTurtleLabel;
     @FXML private Label nameTurtleLabel;
     @FXML private AnchorPane turtleID;
+
     public void setIdTurtleLabel(String idTurtle) {
         idTurtleLabel.setText(idTurtle);
     }
     public void setNameTurtleLabel(String turtleName) {
         nameTurtleLabel.setText(turtleName);
     }
+
     @FXML public void onTurtleClick(MouseEvent event) {
+        EventController co = new EventController();
+        co.throwTurtleEvent();
         turtleID.setStyle("-fx-background-color: #165DCE; -fx-background-radius: 1em");
-        System.out.println("Turtle clicked");
+        isSelected = true;
     }
     @FXML public void onMouseEnter(MouseEvent event) {
-        turtleID.setStyle("-fx-background-color: #6393E7; -fx-background-radius: 1em");
+        if(!isSelected) {
+            turtleID.setStyle("-fx-background-color: #6393E7; -fx-background-radius: 1em");
+        }
     }
     @FXML public void onMouseExit(MouseEvent event) {
-        turtleID.setStyle("-fx-background-color: #1E1E1E");
+        if (!isSelected) {
+            turtleID.setStyle("-fx-background-color: #1E1E1E");
+        }
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        TurtleClickEventBus.getInstance().register(this);
+    }
+
+    @Subscribe
+    public void handleTurtleClickEvent(TurtleClickEvent event) {
+        turtleID.setStyle("-fx-background-color: #1E1E1E");
+        isSelected = false;
+    }
+
 }
