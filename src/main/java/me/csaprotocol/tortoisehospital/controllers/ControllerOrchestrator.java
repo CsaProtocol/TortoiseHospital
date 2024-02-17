@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import me.csaprotocol.tortoisehospital.Main;
-import me.csaprotocol.tortoisehospital.daos.factory.DAOFactory;
 import me.csaprotocol.tortoisehospital.entities.Center;
 import me.csaprotocol.tortoisehospital.entities.Tank;
 import me.csaprotocol.tortoisehospital.entities.Turtle;
@@ -23,6 +22,11 @@ public class ControllerOrchestrator {
     private final DataController data = DataController.getInstance();
 
     //GUI Interfaces
+    public void showQualcosina(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/usermenuResources/turtlepanel/turtlePanel.fxml"));
+        showNewGUI(stage, fxmlLoader);
+    }
+
     public void showLoginGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/login.fxml"));
 

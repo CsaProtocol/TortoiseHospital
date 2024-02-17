@@ -1,17 +1,3 @@
-/* Buttons */
-.button {
-    -fx-background-color: #282828;
-    -fx-background-radius: 0em;
-}
-.button:hover {
-
-}
-
-.button:focused {
-    -fx-background-color: #165DCE;
-    -fx-background-radius: 1em;
-}
-
 .table-view {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;

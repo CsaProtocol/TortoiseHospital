@@ -6,18 +6,17 @@ import me.csaprotocol.tortoisehospital.events.TurtleClickEvent;
 import me.csaprotocol.tortoisehospital.events.eventbuses.CenterClickEventBus;
 import me.csaprotocol.tortoisehospital.events.eventbuses.TankClickEventBus;
 import me.csaprotocol.tortoisehospital.events.eventbuses.TurtleClickEventBus;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.userMenu;
 
 public class EventController {
 
-    public void throwTurtleEvent() {
+    public void fireTurtleEvent() {
         TurtleClickEventBus.getInstance().post(new TurtleClickEvent());
     }
 
-    public void throwCenterEvent() {
+    public void fireCenterEvent() {
         CenterClickEventBus.getInstance().post(new CenterClickEvent());
     }
-    public void throwTankEvent() {
+    public void fireTankEvent() {
         TankClickEventBus.getInstance().post(new TankClickEvent());
     }
 

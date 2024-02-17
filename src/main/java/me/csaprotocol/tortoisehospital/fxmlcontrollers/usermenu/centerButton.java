@@ -24,7 +24,7 @@ public class centerButton implements Initializable {
         co.showTurtlesGUIbyCenter(buttonId.getText());
         co.setSelectedCenter(buttonId.getText());
         EventController ec = new EventController();
-        ec.throwCenterEvent();
+        ec.fireCenterEvent();
         buttonId.setStyle("-fx-background-color: #165DCE; -fx-background-radius: 1em");
         isSelected = true;
     }

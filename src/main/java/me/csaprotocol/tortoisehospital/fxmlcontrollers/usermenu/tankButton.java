@@ -7,9 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
 import me.csaprotocol.tortoisehospital.controllers.EventController;
-import me.csaprotocol.tortoisehospital.events.CenterClickEvent;
 import me.csaprotocol.tortoisehospital.events.TankClickEvent;
-import me.csaprotocol.tortoisehospital.events.eventbuses.CenterClickEventBus;
 import me.csaprotocol.tortoisehospital.events.eventbuses.TankClickEventBus;
 
 import java.net.URL;
@@ -25,7 +23,7 @@ public class tankButton implements Initializable {
         co.showTurtlesGUIbyTank(Integer.parseInt(buttonId.getText()));
         co.setSelectedTank(Integer.parseInt(buttonId.getText()));
         EventController ec = new EventController();
-        ec.throwTankEvent();
+        ec.fireTankEvent();
         buttonId.setStyle("-fx-background-color: #165DCE; -fx-background-radius: 1em");
         isSelected = true;
     }

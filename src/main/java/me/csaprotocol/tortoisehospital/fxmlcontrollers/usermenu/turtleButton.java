@@ -10,7 +10,6 @@ import lombok.Setter;
 import me.csaprotocol.tortoisehospital.controllers.EventController;
 import me.csaprotocol.tortoisehospital.events.TurtleClickEvent;
 import me.csaprotocol.tortoisehospital.events.eventbuses.TurtleClickEventBus;
-import org.w3c.dom.events.Event;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,7 +30,7 @@ public class turtleButton implements Initializable {
 
     @FXML public void onTurtleClick(MouseEvent event) {
         EventController co = new EventController();
-        co.throwTurtleEvent();
+        co.fireTurtleEvent();
         turtleID.setStyle("-fx-background-color: #165DCE; -fx-background-radius: 1em");
         isSelected = true;
     }
@@ -51,6 +50,7 @@ public class turtleButton implements Initializable {
         TurtleClickEventBus.getInstance().register(this);
     }
 
+    //Event Bus for TurtleClickEvent
     @Subscribe
     public void handleTurtleClickEvent(TurtleClickEvent event) {
         turtleID.setStyle("-fx-background-color: #1E1E1E");

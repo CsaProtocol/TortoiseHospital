@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="90.0" style="-fx-background-color: #282828; -fx-background-radius: 1em; -fx-border-radius: 1em;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtlepanel.measurementButton">
+   <children>
+      <Label fx:id="dateLabel" layoutX="33.0" layoutY="78.0" text="Date" textFill="#aeaeae" />
+      <ImageView fitHeight="52.0" fitWidth="51.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/weight.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

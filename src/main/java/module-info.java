@@ -7,8 +7,12 @@ module me.csaprotocol.tortoisehospital {
     requires org.postgresql.jdbc;
     //HikariCP connection pool
     requires com.zaxxer.hikari;
-    requires static lombok;
+    //Google Guava
     requires com.google.common;
+    //Projekt Lombok
+    requires static lombok;
+    //MaterialFX
+    requires MaterialFX;
 
 
     opens me.csaprotocol.tortoisehospital to javafx.fxml;
@@ -16,4 +20,6 @@ module me.csaprotocol.tortoisehospital {
     opens me.csaprotocol.tortoisehospital.fxmlcontrollers to javafx.fxml;
     exports me.csaprotocol.tortoisehospital;
     exports me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu to com.google.common;
+    exports me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtlepanel to com.google.common;
+    opens me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtlepanel to javafx.fxml;
 }
