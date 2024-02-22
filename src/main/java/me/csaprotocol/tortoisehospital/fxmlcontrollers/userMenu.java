@@ -8,11 +8,16 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import me.csaprotocol.tortoisehospital.Main;
-import me.csaprotocol.tortoisehospital.controllers.EventController;
+import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtleButton;
+import org.controlsfx.control.PopOver;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +26,8 @@ import java.util.ResourceBundle;
 
 public class userMenu implements Initializable {
 
+    @FXML private BorderPane mainSceneHolder;
+
     //First FXML column
     @FXML private Button statisticsButton;
     @FXML private VBox subScrollCenter;
@@ -28,6 +35,7 @@ public class userMenu implements Initializable {
     @FXML private TextField searchTurtleTxtField;
 
     //Second FXML column
+    @FXML private Button searchTurtleButton;
     @FXML private Button addTurtleButton;
     @FXML private ScrollPane scrollPaneTurtle;
     @FXML private VBox subScrollTurtle;
@@ -39,6 +47,9 @@ public class userMenu implements Initializable {
     @FXML private Label selectedObjectFifthLabel;
 
     //Third FXML column
+    @FXML private Pane subSceneHolder;
+    @FXML private Pane thirdColumn;
+    @FXML private Pane fourthColumn;
     @FXML private MFXProgressSpinner progressSpinner;
 
     //First FXML column methods
@@ -69,6 +80,17 @@ public class userMenu implements Initializable {
     }
 
     //Second FXML column methods
+    @FXML public void onSearchTurtleButtonClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showTurtlesGUIbySearch(searchTurtleTxtField.getText());
+    }
+
+    @FXML void onAddTurtleClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        Stage secondaryStage = new Stage();
+        co.showTurtleManagementGUI(secondaryStage);
+    }
+
     public void addTurtleButton(String TurtleID, String TurtleName) {
         Node newButton = new Button();
         try {
@@ -86,6 +108,7 @@ public class userMenu implements Initializable {
     public void clearTurtles() {
         subScrollTurtle.getChildren().clear();
     }
+
 
     //Setters for selected Center/Tank
     public void setFirstLabel(String toSet) {
@@ -110,14 +133,46 @@ public class userMenu implements Initializable {
 
 
     //Third FXML column methods
-    public void showSpinner() {
-        progressSpinner.setVisible(!progressSpinner.isVisible());
+    public void showSpinner(boolean visibility) {
+        progressSpinner.setVisible(visibility);
     }
+
+    public void showThirdColumn(FXMLLoader fxmlLoader) {
+        try {
+            subSceneHolder.getChildren().remove(thirdColumn);
+            Pane subSceneToLoad = fxmlLoader.load();
+            subSceneHolder.getChildren().add(subSceneToLoad);
+            subSceneToLoad.prefHeight(subSceneHolder.getHeight());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showFourthColumn(FXMLLoader fxmlLoader) {
+        try {
+            subSceneHolder.getChildren().remove(fourthColumn);
+            Pane subSceneToLoad = fxmlLoader.load();
+            subSceneHolder.getChildren().add(subSceneToLoad);
+            subSceneToLoad.prefHeight(subSceneHolder.getHeight());
+            subSceneToLoad.setLayoutX(363);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //Initialization
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         scrollPaneTurtle.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPaneTurtle.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        //PopOver for addTurtleButton: explanation of what the button does
+        Label explanationLabel = new Label(" First access for a new turtle");
+        PopOver explanationPopOver = new PopOver(explanationLabel);
+        explanationPopOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+        addTurtleButton.setOnMouseEntered(event -> explanationPopOver.show(addTurtleButton));
+        addTurtleButton.setOnMouseExited(event -> explanationPopOver.hide());
     }
+
 }

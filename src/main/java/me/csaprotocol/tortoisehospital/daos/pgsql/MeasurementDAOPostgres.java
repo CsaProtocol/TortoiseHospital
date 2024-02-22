@@ -2,16 +2,64 @@ package me.csaprotocol.tortoisehospital.daos.pgsql;
 
 import me.csaprotocol.tortoisehospital.daos.MeasurementDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
+import me.csaprotocol.tortoisehospital.entities.Measurement;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDAO {
 
-            public MeasurementDAOPostgres() {
-                super();
+    public MeasurementDAOPostgres() {
+        super();
+    }
+
+    @Override
+    public ArrayList<Measurement> getMeasurementsByTurtleId(String TurtleID) {
+        String query = "SELECT width, length, weight, m_date FROM measurement WHERE turtle_id = ? ORDER BY m_date DESC";
+        ArrayList<Measurement> measurements = new ArrayList<>();
+
+        try {
+            Connection conn = commonDataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, TurtleID);
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                Measurement measurement = new Measurement();
+                measurement.setWidth(rs.getFloat("width"));
+                measurement.setLength(rs.getFloat("length"));
+                measurement.setWeight(rs.getFloat("weight"));
+                measurement.setDate(rs.getDate("m_date").toLocalDate());
+                //Add to ArrayList
+                measurements.add(measurement);
             }
 
-            public void create() {
-            }
+            return measurements;
 
-            public void update() {
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return measurements;
+    }
+
+    @Override
+    public void addMeasurement(Measurement measurement, String turtleID) {
+        String query = "INSERT INTO Measurement(turtle_ID, width, length, weight, m_date) VALUES(?, ?, ?, ?, ?)";
+
+        try {
+            Connection conn = commonDataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, turtleID);
+            st.setFloat(2, measurement.getWidth());
+            st.setFloat(3, measurement.getLength());
+            st.setFloat(4, measurement.getWeight());
+            st.setDate(5, java.sql.Date.valueOf(measurement.getDate()));
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

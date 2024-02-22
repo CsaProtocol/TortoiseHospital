@@ -3,17 +3,18 @@ package me.csaprotocol.tortoisehospital.controllers;
 import javafx.fxml.FXMLLoader;
 import lombok.Getter;
 import lombok.Setter;
-import me.csaprotocol.tortoisehospital.entities.Center;
-import me.csaprotocol.tortoisehospital.entities.Employee;
-import me.csaprotocol.tortoisehospital.entities.Tank;
-import me.csaprotocol.tortoisehospital.entities.Turtle;
+import me.csaprotocol.tortoisehospital.entities.*;
 
 import java.util.ArrayList;
 
 public class DataController {
 
     private static DataController instance;
+
     private @Getter @Setter FXMLLoader currentScene;
+    private @Getter @Setter FXMLLoader currentSubSceneThirdColumn;
+    private @Getter @Setter FXMLLoader currentSubSceneFourthColumn;
+    private @Getter @Setter String currentSubSceneName;
     private @Getter @Setter Employee loggedUser;
 
     private @Getter @Setter ArrayList<Center> centerArray;

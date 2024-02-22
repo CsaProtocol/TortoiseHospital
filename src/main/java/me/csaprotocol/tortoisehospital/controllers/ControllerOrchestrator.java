@@ -8,9 +8,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import me.csaprotocol.tortoisehospital.Main;
-import me.csaprotocol.tortoisehospital.entities.Center;
-import me.csaprotocol.tortoisehospital.entities.Tank;
-import me.csaprotocol.tortoisehospital.entities.Turtle;
+import me.csaprotocol.tortoisehospital.entities.*;
+import me.csaprotocol.tortoisehospital.entities.enums.Sex;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.fourthColumnTurtleMenu;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.thirdColumnTurtleMenu;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.userMenu;
 
 import java.io.IOException;
@@ -22,9 +23,18 @@ public class ControllerOrchestrator {
     private final DataController data = DataController.getInstance();
 
     //GUI Interfaces
-    public void showQualcosina(Stage stage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/usermenuResources/turtlepanel/turtlePanel.fxml"));
-        showNewGUI(stage, fxmlLoader);
+    public void showTurtleManagementGUI(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/turtleManagementGUI.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            data.setCurrentScene(fxmlLoader);
+            stage.setTitle("TortoiseHospital");
+            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("resources/images/appLogo.png"))));
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showLoginGUI(Stage stage) {
@@ -88,6 +98,19 @@ public class ControllerOrchestrator {
         }
     }
 
+    public void showTurtlesGUIbySearch(String TurtleID) {
+        userMenu currentSceneController = data.getCurrentScene().getController();
+        currentSceneController.clearTurtles();
+        DaoController dco = new DaoController();
+        ArrayList<Turtle> turtles = dco.searchTurtles(TurtleID);
+
+        data.setTurtlesArray(turtles);
+
+        for (Turtle turtle : turtles) {
+            currentSceneController.addTurtleButton(turtle.getID(), turtle.getName());
+        }
+    }
+
     private void showNewGUI(Stage stage, FXMLLoader fxmlLoader) {
         try {
             Scene scene = new Scene(fxmlLoader.load());
@@ -107,6 +130,74 @@ public class ControllerOrchestrator {
         Stage stageToClose = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stageToClose.close();
     }
+
+    private void showSubSceneTurtlePanel() {
+        FXMLLoader thirdColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/turtleMenu/thirdColumnTurtleMenu.fxml"));
+        FXMLLoader fourthColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/turtleMenu/fourthColumnTurtleMenu.fxml"));
+        data.setCurrentSubSceneThirdColumn(thirdColumnFXMLLoader);
+        data.setCurrentSubSceneFourthColumn(fourthColumnFXMLLoader);
+        data.setCurrentSubSceneName("turtlePanel");
+        showSubScene(thirdColumnFXMLLoader, fourthColumnFXMLLoader);
+    }
+    private void showSubScene(FXMLLoader thirdColumnFxmlLoader, FXMLLoader fourthColumnFxmlLoader) {
+        userMenu currentSceneFXMLController = data.getCurrentScene().getController();
+        currentSceneFXMLController.showSpinner(false);
+        currentSceneFXMLController.showThirdColumn(thirdColumnFxmlLoader);
+        currentSceneFXMLController.showFourthColumn(fourthColumnFxmlLoader);
+    }
+
+    public void handleTurtleClick(String TurtleID) {
+        switch(data.getCurrentSubSceneName()) {
+            case "turtlePanel":
+                setSelectedTurtle(TurtleID);
+                showMeasurementGUI();
+                showMedicalRecordGUI();
+                break;
+            case "statsPanel":
+                break;
+            case null:
+                showSubSceneTurtlePanel();
+                handleTurtleClick(TurtleID);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void showMeasurementGUI() {
+        thirdColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneThirdColumn().getController();
+        DaoController dco = new DaoController();
+        ArrayList<Measurement> measurementArrayList = dco.getMeasurementsByTurtleId(data.getSelectedTurtle().getID());
+        currentSubSceneController.clearMeasurementButtons();
+
+        for (Measurement measurement : measurementArrayList) {
+            currentSubSceneController.addMeasurementButton(measurement);
+        }
+    }
+
+    public void showMedicalRecordGUI() {
+        fourthColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        DaoController dco = new DaoController();
+        ArrayList<MedicalRecord> mrList = dco.getMedicalRecordsByTurtleID(data.getSelectedTurtle().getID());
+        currentSubSceneController.clearMedicalRecordButtons();
+
+        for (MedicalRecord medrecord : mrList) {
+            currentSubSceneController.addMedicalRecordButton(medrecord);
+        }
+    }
+
+    public void showExaminationsGUI(MedicalRecord mr) {
+        fourthColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        DaoController dco = new DaoController();
+        ArrayList<Examination> examinationArrayList = dco.getExaminationsByMedicalRecordID(mr.getInternalID());
+        currentSubSceneController.clearExaminationButtons();
+
+        for (Examination examination : examinationArrayList) {
+            currentSubSceneController.addExaminationButton(examination);
+        }
+    }
+
+
 
     //Interface with DataController
     public void setSelectedCenter(String centerID) {
@@ -134,4 +225,70 @@ public class ControllerOrchestrator {
         sceneController.setFourthLabel("", false);
         sceneController.setFifthLabel("", false);
     }
+
+    public void setSelectedTurtle(String turtleID) {
+        DaoController dco = new DaoController();
+        Object[] TurtleAndTank = dco.getTurtleByID(turtleID);
+        data.setSelectedTurtle((Turtle) TurtleAndTank[0]);
+        thirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
+        subSceneController.setTurtleIDLabel(data.getSelectedTurtle().getID());
+        subSceneController.setSpeciesLabel(data.getSelectedTurtle().getSpecies());
+        subSceneController.setTurtleNameLabel(data.getSelectedTurtle().getName());
+        if(data.getSelectedTurtle().getSex().equals(Sex.Female))
+            subSceneController.setSexImgToFemale();
+        else
+            subSceneController.setSexImgToMale();
+        subSceneController.setCenterIDLabel((String) TurtleAndTank[2]);
+        subSceneController.setTankIDLabel(String.valueOf((int) TurtleAndTank[1]));
+    }
+
+    public void setSelectedMeasurement(Measurement measurementToFocus) {
+        thirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
+        subSceneController.setLengthLabel(String.valueOf(measurementToFocus.getLength()));
+        subSceneController.setMeasurementDateLabel(measurementToFocus.getDate().toString());
+        subSceneController.setWeightLabel(String.valueOf(measurementToFocus.getWeight()));
+        subSceneController.setWidthLabel(String.valueOf(measurementToFocus.getWidth()));
+    }
+
+    public void setSelectedMedicalRecord(MedicalRecord mr) {
+        fourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        subSceneController.setLocationLabel(mr.getLatitude() + ", " + mr.getLongitude());
+        subSceneController.setDischargeDateLabel(mr.getRelease_date());
+        subSceneController.setAdmissionDateLabel(mr.getAccess_date().toString());
+        subSceneController.setMedicalRecordInternalIDLabel(mr.getInternalID());
+
+        showExaminationsGUI(mr);
+    }
+
+    public void setSelectedExamination(Examination ex) {
+        fourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        subSceneController.setExaminationDateLabel(ex.getDate().toString());
+        subSceneController.setVetNotesLabel(ex.getVet_notes());
+        subSceneController.setExaminationCirclesColor(subSceneController.getHeadCircle(), ex.getHead_status().getColor());
+        subSceneController.setExaminationCirclesColor(subSceneController.getEyesCircle(), ex.getEyes_status().getColor());
+        subSceneController.setExaminationCirclesColor(subSceneController.getTailCircle(), ex.getTail_status().getColor());
+        subSceneController.setExaminationCirclesColor(subSceneController.getFinsCircle(), ex.getFins_status().getColor());
+        subSceneController.setExaminationCirclesColor(subSceneController.getNeckCircle(), ex.getNeck_status().getColor());
+        subSceneController.setExaminationCirclesColor(subSceneController.getBeakCircle(), ex.getBeak_status().getColor());
+        subSceneController.setExaminationCirclesColor(subSceneController.getNoseCircle(), ex.getNose_status().getColor());
+    }
+
+    //Interface with DataController - Data Manipulation
+    public ArrayList<String> getCenterIds() {
+        ArrayList<String> centerIds = new ArrayList<>();
+        for (Center center : data.getCenterArray()) {
+            centerIds.add(center.getID());
+        }
+        return centerIds;
+    }
+
+    public ArrayList<String> getTankIds() {
+        ArrayList<String> tankIds = new ArrayList<>();
+        for (Tank tank : data.getTankArray()) {
+            tankIds.add(String.valueOf(tank.getTankID()));
+        }
+        return tankIds;
+    }
+
+
 }

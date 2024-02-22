@@ -13,13 +13,17 @@ module me.csaprotocol.tortoisehospital {
     requires static lombok;
     //MaterialFX
     requires MaterialFX;
+    requires org.controlsfx.controls;
+    //ControlsFX
 
 
     opens me.csaprotocol.tortoisehospital to javafx.fxml;
-    opens me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu to javafx.fxml;
     opens me.csaprotocol.tortoisehospital.fxmlcontrollers to javafx.fxml;
+    opens me.csaprotocol.tortoisehospital.fxmlcontrollers.steppers to javafx.fxml;
+    opens me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu to javafx.fxml;
+    opens me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu to javafx.fxml;
+
     exports me.csaprotocol.tortoisehospital;
     exports me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu to com.google.common;
-    exports me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtlepanel to com.google.common;
-    opens me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtlepanel to javafx.fxml;
+
 }

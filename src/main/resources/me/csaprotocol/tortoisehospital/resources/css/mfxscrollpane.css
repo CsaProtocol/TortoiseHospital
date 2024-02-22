@@ -1,0 +1,22 @@
+.hbox {
+    -fx-background-color: #1E1E1E;
+}
+
+.mfx-scroll-pane {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #111111;
+    -fx-border-style: solid hidden solid hidden;
+    -fx-border-width: 1px 0 1px 0;
+}
+.mfx-scroll-pane-third-column {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #111111;
+    -fx-border-style: solid solid solid solid;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+.mfx-scroll-pane-fourth-column {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #111111;
+    -fx-border-style: solid hidden solid solid;
+    -fx-border-width: 1px 0 1px 1px;
+}

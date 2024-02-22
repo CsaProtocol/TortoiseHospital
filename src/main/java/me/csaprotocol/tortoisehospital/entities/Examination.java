@@ -2,20 +2,20 @@ package me.csaprotocol.tortoisehospital.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.csaprotocol.tortoisehospital.entities.enums.status;
+import me.csaprotocol.tortoisehospital.entities.enums.Status;
 
 import java.time.LocalDate;
 
 @Getter @Setter
 public class Examination {
 
-    private status head_status;
-    private status eyes_status;
-    private status tail_status;
-    private status fins_status;
-    private status neck_status;
-    private status beak_status;
-    private status nose_status;
+    private Status head_status;
+    private Status eyes_status;
+    private Status tail_status;
+    private Status fins_status;
+    private Status neck_status;
+    private Status beak_status;
+    private Status nose_status;
     private String vet_notes;
     private LocalDate date;
 

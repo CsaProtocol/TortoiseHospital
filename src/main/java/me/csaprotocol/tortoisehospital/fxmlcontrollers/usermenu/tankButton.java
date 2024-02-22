@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
 import me.csaprotocol.tortoisehospital.controllers.EventController;
 import me.csaprotocol.tortoisehospital.events.TankClickEvent;
-import me.csaprotocol.tortoisehospital.events.eventbuses.TankClickEventBus;
+import me.csaprotocol.tortoisehospital.events.eventbuses.EventBus;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,7 +43,7 @@ public class tankButton implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         buttonId.setStyle("-fx-background-color: #282828");
-        TankClickEventBus.getInstance().register(this);
+        EventBus.getInstance().register(this);
     }
 
     @Subscribe

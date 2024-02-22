@@ -4,11 +4,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class connectionPoolPostgres {
     private HikariDataSource ds;
     private @Getter static final connectionPoolPostgres instance = new connectionPoolPostgres();

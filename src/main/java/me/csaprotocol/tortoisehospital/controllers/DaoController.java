@@ -1,9 +1,7 @@
 package me.csaprotocol.tortoisehospital.controllers;
 
 import me.csaprotocol.tortoisehospital.daos.factory.DAOFactory;
-import me.csaprotocol.tortoisehospital.entities.Center;
-import me.csaprotocol.tortoisehospital.entities.Tank;
-import me.csaprotocol.tortoisehospital.entities.Turtle;
+import me.csaprotocol.tortoisehospital.entities.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -35,4 +33,25 @@ public class DaoController {
     public ArrayList<Turtle> getTurtlesByCenterID(String centerID) {
         return Objects.requireNonNull(DAOFactory.getTurtleDAO()).getTurtlesByCenterID(centerID);
     }
+
+    public ArrayList<Turtle> searchTurtles(String toSearch) {
+        return Objects.requireNonNull(DAOFactory.getTurtleDAO()).searchTurtle(toSearch);
+    }
+
+    public Object[] getTurtleByID(String TurtleID) {
+        return Objects.requireNonNull(DAOFactory.getTurtleDAO()).getTurtleAndTankByTurtleID(TurtleID);
+    }
+
+    public ArrayList<Measurement> getMeasurementsByTurtleId(String TurtleID) {
+        return Objects.requireNonNull(DAOFactory.getMeasurementDAO()).getMeasurementsByTurtleId(TurtleID);
+    }
+
+    public ArrayList<MedicalRecord> getMedicalRecordsByTurtleID(String TurtleID) {
+        return Objects.requireNonNull(DAOFactory.getMedicalRecordDAO()).getMedicalRecordsByTurtleID(TurtleID);
+    }
+
+    public ArrayList<Examination> getExaminationsByMedicalRecordID(String medicalRecordID) {
+        return Objects.requireNonNull(DAOFactory.getExaminationDAO()).getExaminationsByMedicalRecordID(medicalRecordID);
+    }
+
 }
