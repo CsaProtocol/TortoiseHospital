@@ -2,12 +2,11 @@ package me.csaprotocol.tortoisehospital.daos;
 
 import me.csaprotocol.tortoisehospital.entities.Center;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface CenterDAO {
     ArrayList<Center> getCenterByEmployeeID(String emp_id);
     Center getCenterByID(String ID);
-    void create(Center center);
-    void update(Center center);
-    void delete(Center center);
+    Integer[] handleCenterStatistics(LocalDate from, LocalDate to, String centerID);
 }

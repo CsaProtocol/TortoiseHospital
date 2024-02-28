@@ -135,4 +135,98 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
 
         return turtles;
     }
+
+    public String createTurtle(String name, String species, String sex) {
+        String query = "INSERT INTO turtle(turtle_sex, name, species) VALUES(?, ?, ?) RETURNING turtle_id";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            assert conn != null;
+            PreparedStatement st = conn.prepareStatement(query);
+            if(sex.equals("Male"))
+                st.setString(1, "M");
+            else
+                st.setString(1, "F");
+
+            st.setString(2, name);
+            st.setString(3, species);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            return rs.getString("turtle_id");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateTurtleTank(String turtleID, String centerID, int tankID) {
+        String query = "UPDATE turtle SET tank_id = ?, center_id = ? WHERE turtle_id = ?";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            assert conn != null;
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, tankID);
+            st.setString(2, centerID);
+            st.setString(3, turtleID);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateTurtle(String turtleID, String name, String species, String sex) {
+        String query = "UPDATE turtle SET name = ?, species = ?, turtle_sex = ? WHERE turtle_id = ?";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            assert conn != null;
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, name);
+            st.setString(2, species);
+            if(sex.equals("Male"))
+                st.setString(3, "M");
+            else
+                st.setString(3, "F");
+            st.setString(4, turtleID);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteTurtle(String turtleID) {
+        String query = "DELETE FROM turtle WHERE turtle_id = ?";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            assert conn != null;
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, turtleID);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Turtle> getAllTurtles() {
+        ArrayList<Turtle> turtles = new ArrayList<>();
+        String query = "SELECT turtle_id, name FROM turtle";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            assert conn != null;
+            PreparedStatement st = conn.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                turtles.add(
+                    new Turtle(
+                        rs.getString("turtle_id"),
+                        rs.getString("name")
+                    )
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return turtles;
+    }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="fourthColumn" prefHeight="800.0" prefWidth="451.0" style="-fx-background-color: #1E1E1E; -fx-border-color: #1A1A1A; -fx-border-style: solid hidden solid solid; -fx-border-insets: 1 0 0 0;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.fourthColumnStatsMenu">
+   <children>
+      <Label layoutX="14.0" layoutY="21.0" prefHeight="17.0" prefWidth="107.0" text="Medical records" textFill="#aeaeae" />
+      <Label layoutX="14.0" layoutY="316.0" prefHeight="17.0" prefWidth="107.0" text="Examinations" textFill="#aeaeae" />
+   </children>
+</Pane>

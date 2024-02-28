@@ -2,7 +2,9 @@ package me.csaprotocol.tortoisehospital.controllers;
 
 import me.csaprotocol.tortoisehospital.daos.factory.DAOFactory;
 import me.csaprotocol.tortoisehospital.entities.*;
+import me.csaprotocol.tortoisehospital.entities.enums.Sex;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -54,4 +56,57 @@ public class DaoController {
         return Objects.requireNonNull(DAOFactory.getExaminationDAO()).getExaminationsByMedicalRecordID(medicalRecordID);
     }
 
+    public String createTurtle(String name, String species, String sex) {
+        return Objects.requireNonNull(DAOFactory.getTurtleDAO()).createTurtle(name, species, sex);
+    }
+
+    public ArrayList<Turtle> getAllTurtles() {
+        return Objects.requireNonNull(DAOFactory.getTurtleDAO()).getAllTurtles();
+    }
+
+    public String createMedicalRecord(String turtleID, String centerID, int tankID, String accessDate, String latitude, String longitude) {
+        String medRecordID = Objects.requireNonNull(DAOFactory.getMedicalRecordDAO()).createMedicalRecord(turtleID, centerID, accessDate, Double.parseDouble(latitude), Double.parseDouble(longitude));
+        Objects.requireNonNull(DAOFactory.getTurtleDAO()).updateTurtleTank(turtleID, centerID, tankID);
+        return medRecordID;
+    }
+
+    public void createExamination(String medicalRecordID, String head_status, String eyes_status, String beak_status, String neck_status, String nose_status, String fins_status, String tail_status, String vetNotes) {
+        Objects.requireNonNull(DAOFactory.getExaminationDAO()).createExamination(medicalRecordID, head_status, eyes_status, beak_status, neck_status, nose_status, fins_status, tail_status, vetNotes);
+    }
+
+    public void createMeasurement(String turtleID, Measurement measurement) {
+        Objects.requireNonNull(DAOFactory.getMeasurementDAO()).createMeasurement(measurement, turtleID);
+    }
+
+    public void updateTurtle(String turtleID, String name, String species, Sex sex) {
+        Objects.requireNonNull(DAOFactory.getTurtleDAO()).updateTurtle(turtleID, name, species, String.valueOf(sex));
+    }
+
+    public void updateExamination(String internalID, String head_status, String eyes_status, String beak_status, String neck_status, String nose_status, String fins_status, String tail_status, String vetNotes, Examination selectedExamination) {
+        Objects.requireNonNull(DAOFactory.getExaminationDAO()).updateExamination(internalID, head_status, eyes_status, beak_status, neck_status, nose_status, fins_status, tail_status, vetNotes, selectedExamination);
+    }
+
+    public void releaseTurtle(String internalID) {
+        Objects.requireNonNull(DAOFactory.getMedicalRecordDAO()).releaseTurtle(internalID);
+    }
+
+    public void deleteTurtle(String internalID) {
+        Objects.requireNonNull(DAOFactory.getTurtleDAO()).deleteTurtle(internalID);
+    }
+
+    public void deleteMeasurement(String turtleID, LocalDate date) {
+        Objects.requireNonNull(DAOFactory.getMeasurementDAO()).deleteMeasurement(turtleID, date);
+    }
+
+    public void deleteMedicalRecord(String internalID) {
+        Objects.requireNonNull(DAOFactory.getMedicalRecordDAO()).deleteMedicalRecord(internalID);
+    }
+
+    public void deleteExamination(String internalID, LocalDate date, String vetNotes) {
+        Objects.requireNonNull(DAOFactory.getExaminationDAO()).deleteExamination(internalID, date, vetNotes);
+    }
+
+    public Integer[] createCenterStatistics(LocalDate from, LocalDate to, String centerID) {
+        return Objects.requireNonNull(DAOFactory.getCenterDAO()).handleCenterStatistics(from, to, centerID);
+    }
 }

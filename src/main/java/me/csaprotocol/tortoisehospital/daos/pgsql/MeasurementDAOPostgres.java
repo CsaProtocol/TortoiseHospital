@@ -4,10 +4,8 @@ import me.csaprotocol.tortoisehospital.daos.MeasurementDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Measurement;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDAO {
@@ -46,7 +44,7 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
     }
 
     @Override
-    public void addMeasurement(Measurement measurement, String turtleID) {
+    public void createMeasurement(Measurement measurement, String turtleID) {
         String query = "INSERT INTO Measurement(turtle_ID, width, length, weight, m_date) VALUES(?, ?, ?, ?, ?)";
 
         try {
@@ -57,6 +55,20 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
             st.setFloat(3, measurement.getLength());
             st.setFloat(4, measurement.getWeight());
             st.setDate(5, java.sql.Date.valueOf(measurement.getDate()));
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteMeasurement(String turtleID, LocalDate date) {
+        String query = "DELETE FROM Measurement WHERE turtle_ID = ? AND m_date = ?";
+
+        try {
+            Connection conn = commonDataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, turtleID);
+            st.setDate(2, Date.valueOf(date));
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -28,7 +28,7 @@ public class Login implements Initializable {
 
         if(loginControllerReference.handleLogin(employeeIDField.getText(), employeePasswordField.getText())) {
             controllerOrchestratorReference.showUserMenuGUI();
-            controllerOrchestratorReference.closeStage(event);
+            controllerOrchestratorReference.closeStageByEvent(event);
         } else {
             unsuccessfulLoginLabel.setVisible(true);
             employeeIDField.clear();

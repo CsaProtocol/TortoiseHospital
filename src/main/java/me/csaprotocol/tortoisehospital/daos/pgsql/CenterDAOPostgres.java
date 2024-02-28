@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
@@ -83,17 +84,25 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
     }
 
     @Override
-    public void create(Center toCreate) {
+    public Integer[] handleCenterStatistics(LocalDate from, LocalDate to, String centerID) {
+        Integer[] values = new Integer[5];
+        String query = "SELECT * FROM GeneralStats(?, ?, ?)";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            assert conn != null;
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setDate(1, java.sql.Date.valueOf(from));
+            st.setDate(2, java.sql.Date.valueOf(to));
+            st.setString(3, centerID);
+            ResultSet rs = st.executeQuery();
+            values[0] = rs.getInt("compromised_t");
+            values[1] = rs.getInt("deepwounded_t");
+            values[2] = rs.getInt("lightwounded_t");
+            values[3] = rs.getInt("normal_t");
+            values[4] = rs.getInt("perfect_t");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
     }
-
-    @Override
-    public void update(Center toUpdate) {
-
-    }
-
-    @Override
-    public void delete(Center toDelete) {
-
-    }
-
 }

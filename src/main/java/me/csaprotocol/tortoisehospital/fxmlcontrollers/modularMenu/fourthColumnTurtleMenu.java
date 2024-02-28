@@ -5,15 +5,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import lombok.Data;
 import lombok.Getter;
 import me.csaprotocol.tortoisehospital.Main;
+import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
+import me.csaprotocol.tortoisehospital.controllers.DataController;
 import me.csaprotocol.tortoisehospital.entities.Examination;
 import me.csaprotocol.tortoisehospital.entities.MedicalRecord;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.dialogUtil;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.examinationButton;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.medicalRecordButton;
 import org.controlsfx.control.PopOver;
@@ -148,4 +154,42 @@ public class fourthColumnTurtleMenu implements Initializable {
         setExaminationCirclesPopOver(neckCircle, "neck");
         setExaminationCirclesPopOver(finsCircle, "fins");
     }
+
+    @FXML
+    void onUpdateExaminationButtonClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showUpdateExaminationGUI(new Stage());
+    }
+
+    @FXML
+    void onMedRecordAddButtonClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showNewMedicalRecordGUI(new Stage());
+    }
+
+
+    @FXML
+    void onMedRecordReleaseButtonClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showDialogReleaseTurtle(event, fourthColumn);
+    }
+
+
+    @FXML
+    void onMedButtonDeleteButtonClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showDialogDeleteMedicalRecord(event, fourthColumn);
+    }
+
+    @FXML void onNewExaminationClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showNewExaminationGUI(new Stage());
+    }
+
+    @FXML
+    void onDeleteExaminationButtonClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showDialogDeleteExamination(event, fourthColumn);
+    }
+
 }

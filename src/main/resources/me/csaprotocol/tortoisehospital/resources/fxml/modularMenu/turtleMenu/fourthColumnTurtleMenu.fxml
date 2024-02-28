@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -12,12 +13,11 @@
 
 <Pane fx:id="fourthColumn" prefHeight="800.0" prefWidth="451.0" style="-fx-background-color: #1E1E1E; -fx-border-color: #1A1A1A; -fx-border-style: solid hidden solid solid; -fx-border-insets: 1 0 0 0;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.fourthColumnTurtleMenu">
    <children>
-      <MFXScrollPane fx:id="scrollPaneMedicalRecord" layoutY="27.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="104.0" prefWidth="451.0" styleClass="mfx-scroll-pane" stylesheets="@../../../css/mfxscrollpane.css" vbarPolicy="NEVER">
+      <MFXScrollPane fx:id="scrollPaneMedicalRecord" layoutY="43.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="104.0" prefWidth="451.0" styleClass="mfx-scroll-pane" stylesheets="@../../../css/mfxscrollpane.css" vbarPolicy="NEVER">
          <content>
             <HBox fx:id="medicalRecordBox" prefHeight="107.0" prefWidth="774.0" />
-         </content>
-      </MFXScrollPane>
-      <Label layoutX="7.0" layoutY="8.0" prefHeight="17.0" prefWidth="107.0" text="Medical records" textFill="#aeaeae" />
+         </content></MFXScrollPane>
+      <Label layoutX="6.0" layoutY="21.0" prefHeight="17.0" prefWidth="107.0" text="Medical records" textFill="#aeaeae" />
       <Label layoutX="25.0" layoutY="155.0" prefHeight="17.0" prefWidth="127.0" text="Selected medical record" textFill="#aeaeae" />
       <MFXScrollPane fx:id="scrollPaneExamination" layoutY="338.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="104.0" prefWidth="451.0" styleClass="mfx-scroll-pane-fourth-column" stylesheets="@../../../css/mfxscrollpane.css" vbarPolicy="NEVER">
          <content>
@@ -94,5 +94,59 @@
          </children>
       </Pane>
       <Label layoutX="25.0" layoutY="485.0" prefHeight="17.0" prefWidth="127.0" text="Selected examination" textFill="#aeaeae" />
+      <Button fx:id="updateSelectedMeasurementButton" layoutX="355.0" layoutY="472.0" mnemonicParsing="false" onMouseClicked="#onUpdateExaminationButtonClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/update.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="deleteSelectedMeasurementButton" layoutX="318.0" layoutY="472.0" mnemonicParsing="false" onMouseClicked="#onDeleteExaminationButtonClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="newMeasurementButton" layoutX="392.0" layoutY="472.0" mnemonicParsing="false" onMouseClicked="#onNewExaminationClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/plus.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="updateSelectedMeasurementButton1" layoutX="355.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#onMedRecordReleaseButtonClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/logout.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="deleteSelectedMeasurementButton1" layoutX="318.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#onMedButtonDeleteButtonClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="392.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#onMedRecordAddButtonClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/plus.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>

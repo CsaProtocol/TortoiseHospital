@@ -43,4 +43,50 @@ public class MedicalRecordDAOPostgres extends PostgresDAO implements MedicalReco
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public String createMedicalRecord(String turtleID, String centerID, String accessDate, Double latitude, Double longitude) {
+        String query = "INSERT INTO medical_record(access_date, location_data, Center_ID, Turtle_ID) VALUES(?, POINT(?, ?), ?, ?) RETURNING internal_id";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setDate(1, Date.valueOf(accessDate));
+            st.setDouble(2, longitude);
+            st.setDouble(3, latitude);
+            st.setString(4, centerID);
+            st.setString(5, turtleID);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            return rs.getString("internal_id");
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void releaseTurtle(String internalID) {
+        String query = "UPDATE medical_record SET release_date = ? WHERE internal_id = ?";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setDate(1, Date.valueOf(LocalDate.now()));
+            st.setString(2, internalID);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void deleteMedicalRecord(String internalID) {
+        String query = "DELETE FROM medical_record WHERE internal_id = ?";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, internalID);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }

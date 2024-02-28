@@ -13,8 +13,11 @@ module me.csaprotocol.tortoisehospital {
     requires static lombok;
     //MaterialFX
     requires MaterialFX;
-    requires org.controlsfx.controls;
     //ControlsFX
+    requires org.controlsfx.controls;
+    //Charts
+    requires eu.hansolo.fx.charts;
+
 
 
     opens me.csaprotocol.tortoisehospital to javafx.fxml;

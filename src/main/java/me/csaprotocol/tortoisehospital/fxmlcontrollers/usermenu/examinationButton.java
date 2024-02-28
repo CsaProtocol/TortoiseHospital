@@ -45,7 +45,7 @@ public class examinationButton implements Initializable {
 
     @FXML void onMouseExit(MouseEvent event) {
         if(!isSelected) {
-            examinationPane.setStyle("-fx-background-color: #6393E7; -fx-background-radius: 1em; -fx-border-radius: 1em");
+            examinationPane.setStyle("-fx-background-color: #282828; -fx-background-radius: 1em; -fx-border-radius: 1em");
         }
     }
 

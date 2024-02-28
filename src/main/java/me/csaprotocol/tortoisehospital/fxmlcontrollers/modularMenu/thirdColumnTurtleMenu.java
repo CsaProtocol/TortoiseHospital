@@ -13,7 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import me.csaprotocol.tortoisehospital.Main;
+import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
 import me.csaprotocol.tortoisehospital.entities.Measurement;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.measurementButton;
 
@@ -97,9 +99,27 @@ public class thirdColumnTurtleMenu implements Initializable {
         measurementBox.setSpacing(4);
     }
 
-    @FXML
-    void deleteSelectedTurtle(MouseEvent event) {
 
+    @FXML
+    void onDeleteSelectedMeasurementClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showDialogDeleteMeasurement(event, thirdColumn, measurementDateLabel.getText());
     }
 
+    @FXML
+    void onDeleteSelectedTurtleClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showDialogDeleteTurtle(event, thirdColumn);
+    }
+
+    @FXML void onNewMeasurementClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showNewMeasurementGUI(new Stage());
+    }
+
+
+    @FXML void onUpdateTurtleButtonClick(MouseEvent event) {
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showUpdateTurtleGUI(new Stage());
+    }
 }

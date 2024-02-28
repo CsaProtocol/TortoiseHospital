@@ -62,6 +62,12 @@
             <artifactId>controlsfx</artifactId>
             <version>11.2.0</version>
         </dependency>
+        <!-- Hansolo Charts: https://mvnrepository.com/artifact/eu.hansolo.fx/charts -->
+        <dependency>
+            <groupId>eu.hansolo.fx</groupId>
+            <artifactId>charts</artifactId>
+            <version>21.0.7</version>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

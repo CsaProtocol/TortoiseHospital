@@ -5,16 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import me.csaprotocol.tortoisehospital.Main;
 import me.csaprotocol.tortoisehospital.entities.*;
 import me.csaprotocol.tortoisehospital.entities.enums.Sex;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.dialogUtil;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.fourthColumnTurtleMenu;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.thirdColumnTurtleMenu;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.userMenu;
+import org.controlsfx.control.Notifications;
+import org.controlsfx.control.action.Action;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -22,12 +30,76 @@ public class ControllerOrchestrator {
 
     private final DataController data = DataController.getInstance();
 
-    //GUI Interfaces
-    public void showTurtleManagementGUI(Stage stage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/turtleManagementGUI.fxml"));
+    //Interfaces for new things to insert in DB
+    public void showNewTurtleGUI(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newTurtle.fxml"));
+        showOtherStage(fxmlLoader, stage);
+    }
+
+    public void showNewMedicalRecordGUI(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newMedicalRecord.fxml"));
+        showOtherStage(fxmlLoader, stage);
+    }
+
+    public void showNewExaminationGUI(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newExamination.fxml"));
+        showOtherStage(fxmlLoader, stage);
+    }
+
+    public void showNewMeasurementGUI(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newMeasurement.fxml"));
+        showOtherStage(fxmlLoader, stage);
+    }
+
+    //Update Interfaces
+
+    public void showUpdateTurtleGUI(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/updateTurtle.fxml"));
+        showOtherStage(fxmlLoader, stage);
+    }
+
+    public void showUpdateExaminationGUI(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/updateExamination.fxml"));
+        showOtherStage(fxmlLoader, stage);
+    }
+
+    public void showDialogReleaseTurtle(MouseEvent event, Pane content) {
+        if(data.getSelectedMedicalRecord() == null)
+            return;
+        dialogUtil dialog = new dialogUtil();
+        dialog.showDialogReleaseTurtle(event, content);
+    }
+
+    public void showDialogDeleteTurtle(MouseEvent event, Pane content) {
+        if(data.getSelectedTurtle() == null)
+            return;
+        dialogUtil dialog = new dialogUtil();
+        dialog.showDialogDeleteTurtle(event, content);
+    }
+
+    public void showDialogDeleteMeasurement(MouseEvent event, Pane content, String date) {
+        dialogUtil dialog = new dialogUtil();
+        dialog.showDialogDeleteMeasurement(event, content, LocalDate.parse(date));
+    }
+
+    public void showDialogDeleteMedicalRecord(MouseEvent event, Pane content) {
+        if(data.getSelectedMedicalRecord() == null)
+            return;
+        dialogUtil dialog = new dialogUtil();
+        dialog.showDialogDeleteMedicalRecord(event, content);
+    }
+
+    public void showDialogDeleteExamination(MouseEvent event, Pane content) {
+        if(data.getSelectedExamination() == null)
+            return;
+        dialogUtil dialog = new dialogUtil();
+        dialog.showDialogDeleteExamination(event, content);
+    }
+
+    public void showOtherStage(FXMLLoader fxmlLoader, Stage stage) {
         try {
             Scene scene = new Scene(fxmlLoader.load());
-            data.setCurrentScene(fxmlLoader);
+            data.setProvisionalFocus(stage);
             stage.setTitle("TortoiseHospital");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("resources/images/appLogo.png"))));
             stage.setScene(scene);
@@ -36,6 +108,8 @@ public class ControllerOrchestrator {
             e.printStackTrace();
         }
     }
+
+    //GUI Interfaces
 
     public void showLoginGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/login.fxml"));
@@ -51,7 +125,7 @@ public class ControllerOrchestrator {
         userMenu currentSceneController = data.getCurrentScene().getController();
         DaoController dco = new DaoController();
         ArrayList<Center> centers = dco.getCentersByEmployeeID();
-
+        showTurtleGUI();
         data.setCenterArray(centers);
 
         for (Center center : centers) {
@@ -77,6 +151,19 @@ public class ControllerOrchestrator {
         currentSceneController.clearTurtles();
         DaoController dco = new DaoController();
         ArrayList<Turtle> turtles = dco.getTurtlesByTankID(tankCode, data.getSelectedCenter().getID());
+
+        data.setTurtlesArray(turtles);
+
+        for (Turtle turtle : turtles) {
+            currentSceneController.addTurtleButton(turtle.getID(), turtle.getName());
+        }
+    }
+
+    public void showTurtleGUI() {
+        userMenu currentSceneController = data.getCurrentScene().getController();
+        currentSceneController.clearTurtles();
+        DaoController dco = new DaoController();
+        ArrayList<Turtle> turtles = dco.getAllTurtles();
 
         data.setTurtlesArray(turtles);
 
@@ -126,11 +213,24 @@ public class ControllerOrchestrator {
         }
     }
 
-    public void closeStage(ActionEvent event) {
+    public void closeStageByEvent(ActionEvent event) {
         Stage stageToClose = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stageToClose.close();
     }
 
+    public void closeStage(Stage stage) {
+        stage.close();
+        data.setProvisionalFocus(null);
+    }
+
+    private void showSubSceneStatsPanel() {
+        FXMLLoader thirdColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/statsMenu/thirdColumnStatsMenu.fxml"));
+        FXMLLoader fourthColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/statsMenu/fourthColumnStatsMenu.fxml"));
+        data.setCurrentSubSceneThirdColumn(thirdColumnFXMLLoader);
+        data.setCurrentSubSceneFourthColumn(fourthColumnFXMLLoader);
+        data.setCurrentSubSceneName("statsPanel");
+        showSubScene(thirdColumnFXMLLoader, fourthColumnFXMLLoader);
+    }
     private void showSubSceneTurtlePanel() {
         FXMLLoader thirdColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/turtleMenu/thirdColumnTurtleMenu.fxml"));
         FXMLLoader fourthColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/turtleMenu/fourthColumnTurtleMenu.fxml"));
@@ -144,24 +244,6 @@ public class ControllerOrchestrator {
         currentSceneFXMLController.showSpinner(false);
         currentSceneFXMLController.showThirdColumn(thirdColumnFxmlLoader);
         currentSceneFXMLController.showFourthColumn(fourthColumnFxmlLoader);
-    }
-
-    public void handleTurtleClick(String TurtleID) {
-        switch(data.getCurrentSubSceneName()) {
-            case "turtlePanel":
-                setSelectedTurtle(TurtleID);
-                showMeasurementGUI();
-                showMedicalRecordGUI();
-                break;
-            case "statsPanel":
-                break;
-            case null:
-                showSubSceneTurtlePanel();
-                handleTurtleClick(TurtleID);
-                break;
-            default:
-                break;
-        }
     }
 
     public void showMeasurementGUI() {
@@ -238,8 +320,11 @@ public class ControllerOrchestrator {
             subSceneController.setSexImgToFemale();
         else
             subSceneController.setSexImgToMale();
-        subSceneController.setCenterIDLabel((String) TurtleAndTank[2]);
-        subSceneController.setTankIDLabel(String.valueOf((int) TurtleAndTank[1]));
+
+        String centerID = (String) TurtleAndTank[2];
+        subSceneController.setCenterIDLabel(Objects.requireNonNullElse(centerID, "N/A"));
+        String tankID = String.valueOf((int) TurtleAndTank[1]);
+        subSceneController.setTankIDLabel(Objects.requireNonNullElse(tankID, "N/A"));
     }
 
     public void setSelectedMeasurement(Measurement measurementToFocus) {
@@ -251,6 +336,7 @@ public class ControllerOrchestrator {
     }
 
     public void setSelectedMedicalRecord(MedicalRecord mr) {
+        data.setSelectedMedicalRecord(mr);
         fourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
         subSceneController.setLocationLabel(mr.getLatitude() + ", " + mr.getLongitude());
         subSceneController.setDischargeDateLabel(mr.getRelease_date());
@@ -261,6 +347,7 @@ public class ControllerOrchestrator {
     }
 
     public void setSelectedExamination(Examination ex) {
+        data.setSelectedExamination(ex);
         fourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
         subSceneController.setExaminationDateLabel(ex.getDate().toString());
         subSceneController.setVetNotesLabel(ex.getVet_notes());
@@ -290,5 +377,205 @@ public class ControllerOrchestrator {
         return tankIds;
     }
 
+    //Click handling
+    public void handleStatsClick() {
+        showSubSceneStatsPanel();
+    }
 
+    public void handleTurtleClick(String TurtleID) {
+        switch(data.getCurrentSubSceneName()) {
+            case "turtlePanel":
+                setSelectedTurtle(TurtleID);
+                showMeasurementGUI();
+                showMedicalRecordGUI();
+                break;
+            case "statsPanel":
+                break;
+            case null:
+                showSubSceneTurtlePanel();
+                handleTurtleClick(TurtleID);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void handleNewTurtle(String turtleID) {
+
+        closeStage(data.getProvisionalFocus());
+
+        Action copyTurtleID = new Action("Copy Turtle ID", event -> {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(turtleID);
+            clipboard.setContent(content);
+        });
+
+        Notifications.create()
+            .title("Turtle created")
+            .text("Turtle " + turtleID + " has been created")
+            .action(copyTurtleID)
+            .showInformation();
+
+        EventController ec = new EventController();
+        ec.fireCenterEvent();
+        ec.fireTankEvent();
+        showTurtleGUI();
+    }
+
+    public void handleNewMedicalRecord(String centerID, int tankID, String accessDate, String latitude, String longitude) {
+        DaoController dco = new DaoController();
+        String medRecordID = dco.createMedicalRecord(data.getSelectedTurtle().getID(), centerID, tankID, accessDate, latitude, longitude);
+
+        closeStage(data.getProvisionalFocus());
+
+        Action copyInternalID = new Action("Copy Internal ID", event -> {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(medRecordID);
+            clipboard.setContent(content);
+        });
+
+        Notifications.create()
+            .title("Medical record created")
+            .text("Turtle admitted with internal ID " + medRecordID)
+            .action(copyInternalID)
+            .showInformation();
+
+        showMedicalRecordGUI();
+        setSelectedTurtle(data.getSelectedTurtle().getID());
+    }
+
+    public void handleNewExamination(String head, String eyes, String beak, String neck, String nose, String fins, String tail, String vetNotes) {
+        DaoController dco = new DaoController();
+        dco.createExamination(data.getSelectedMedicalRecord().getInternalID(), head, eyes, beak, neck, nose, fins, tail, vetNotes);
+
+        closeStage(data.getProvisionalFocus());
+
+        Notifications.create()
+            .title("Examination created")
+            .text("Examination created successfully")
+            .showInformation();
+
+        showExaminationsGUI(data.getSelectedMedicalRecord());
+    }
+
+    public void handleNewMeasurement(String date, String width, String length, String weight) {
+        DaoController dco = new DaoController();
+        Measurement toPass = new Measurement();
+        toPass.setDate(LocalDate.parse(date));
+        toPass.setWidth((float) Double.parseDouble(width));
+        toPass.setLength((float) Double.parseDouble(length));
+        toPass.setWeight((float) Double.parseDouble(weight));
+
+        dco.createMeasurement(data.getSelectedTurtle().getID(), toPass);
+
+        closeStage(data.getProvisionalFocus());
+
+        Notifications.create()
+            .title("Measurement created")
+            .text("Measurement created successfully")
+            .showInformation();
+
+        showMeasurementGUI();
+    }
+
+    public void handleTurtleUpdate(String turtleName, String species, Sex sex) {
+        DaoController dco = new DaoController();
+        dco.updateTurtle(data.getSelectedTurtle().getID(), turtleName, species, sex);
+        setSelectedTurtle(data.getSelectedTurtle().getID());
+
+        closeStage(data.getProvisionalFocus());
+
+        Notifications.create()
+            .title("Turtle " + data.getSelectedTurtle().getID() + " updated")
+            .text("Turtle updated successfully")
+            .showInformation();
+
+        showTurtleGUI();
+    }
+
+    public void handleExaminationUpdate(String head, String eyes, String beak, String neck, String nose, String fins, String tail, String vetNotes) {
+        DaoController dco = new DaoController();
+        dco.updateExamination(data.getSelectedMedicalRecord().getInternalID(), head, eyes, beak, neck, nose, fins, tail, vetNotes, data.getSelectedExamination());
+
+        closeStage(data.getProvisionalFocus());
+
+        Notifications.create()
+            .title("Examination updated")
+            .text("Examination updated successfully")
+            .showInformation();
+
+        showExaminationsGUI(data.getSelectedMedicalRecord());
+    }
+
+    public void handleTurtleRelease() {
+        DaoController dco = new DaoController();
+        dco.releaseTurtle(data.getSelectedMedicalRecord().getInternalID());
+
+        Notifications.create()
+            .title("Turtle " + data.getSelectedTurtle().getID() + " released")
+            .text("Turtle released successfully from center")
+            .showInformation();
+
+        showTurtleGUI();
+        showMedicalRecordGUI();
+    }
+
+    public void handleTurtleDeletion() {
+        DaoController dco = new DaoController();
+        dco.deleteTurtle(data.getSelectedTurtle().getID());
+
+        Notifications.create()
+            .title("Turtle " + data.getSelectedTurtle().getID() + " deleted")
+            .text("Turtle deleted successfully")
+            .showInformation();
+
+        data.setSelectedTurtle(null);
+        showTurtleGUI();
+    }
+
+    public void handleMeasurementDeletion(LocalDate date) {
+        DaoController dco = new DaoController();
+        dco.deleteMeasurement(data.getSelectedTurtle().getID(), date);
+
+        Notifications.create()
+            .title("Measurement deleted")
+            .text("Measurement deleted successfully")
+            .showInformation();
+
+        showMeasurementGUI();
+    }
+
+    public void handleMedicalRecordDeletion() {
+        DaoController dco = new DaoController();
+        dco.deleteMedicalRecord(data.getSelectedMedicalRecord().getInternalID());
+
+        Notifications.create()
+            .title("Medical record deleted")
+            .text("Medical record deleted successfully")
+            .showInformation();
+
+        data.setSelectedMedicalRecord(null);
+        showMedicalRecordGUI();
+    }
+
+    public void handleExaminationDeletion() {
+        DaoController dco = new DaoController();
+        dco.deleteExamination(data.getSelectedMedicalRecord().getInternalID(), data.getSelectedExamination().getDate(), data.getSelectedExamination().getVet_notes());
+
+        Notifications.create()
+            .title("Examination deleted")
+            .text("Examination deleted successfully")
+            .showInformation();
+
+        data.setSelectedExamination(null);
+        showExaminationsGUI(data.getSelectedMedicalRecord());
+    }
+
+    //Statistics
+    public Integer[] handleCenterStatistics(LocalDate from, LocalDate to) {
+        DaoController dc = new DaoController();
+        return dc.createCenterStatistics(from, to, data.getSelectedCenter().getID());
+    }
 }

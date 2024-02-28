@@ -30,9 +30,13 @@ public class userMenu implements Initializable {
 
     //First FXML column
     @FXML private Button statisticsButton;
+    @FXML private Button hospitalButton;
     @FXML private VBox subScrollCenter;
     @FXML private VBox subScrollTank;
     @FXML private TextField searchTurtleTxtField;
+
+    @FXML private Label tankLabel;
+    @FXML private ScrollPane tankScrollPane;
 
     //Second FXML column
     @FXML private Button searchTurtleButton;
@@ -87,8 +91,7 @@ public class userMenu implements Initializable {
 
     @FXML void onAddTurtleClick(MouseEvent event) {
         ControllerOrchestrator co = new ControllerOrchestrator();
-        Stage secondaryStage = new Stage();
-        co.showTurtleManagementGUI(secondaryStage);
+        co.showNewTurtleGUI(new Stage());
     }
 
     public void addTurtleButton(String TurtleID, String TurtleName) {
@@ -175,4 +178,24 @@ public class userMenu implements Initializable {
         addTurtleButton.setOnMouseExited(event -> explanationPopOver.hide());
     }
 
+    public void setTankVisibility(boolean visibility) {
+        tankLabel.setVisible(visibility);
+        tankScrollPane.setVisible(visibility);
+    }
+
+    @FXML
+    void onHospitalButtonClick(MouseEvent event) {
+        setTankVisibility(true);
+        hospitalButton.setVisible(false);
+        statisticsButton.setVisible(true);
+    }
+
+    @FXML
+    void onStatisticsClick(MouseEvent event) {
+        setTankVisibility(false);
+        hospitalButton.setVisible(true);
+        statisticsButton.setVisible(false);
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.handleStatsClick();
+    }
 }

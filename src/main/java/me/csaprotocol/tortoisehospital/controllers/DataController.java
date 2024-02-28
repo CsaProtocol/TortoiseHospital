@@ -1,6 +1,8 @@
 package me.csaprotocol.tortoisehospital.controllers;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import me.csaprotocol.tortoisehospital.entities.*;
@@ -11,6 +13,7 @@ public class DataController {
 
     private static DataController instance;
 
+    private @Getter @Setter Stage provisionalFocus;
     private @Getter @Setter FXMLLoader currentScene;
     private @Getter @Setter FXMLLoader currentSubSceneThirdColumn;
     private @Getter @Setter FXMLLoader currentSubSceneFourthColumn;
@@ -24,6 +27,8 @@ public class DataController {
     private @Getter @Setter Tank selectedTank;
     private @Getter @Setter Center selectedCenter;
     private @Getter @Setter Turtle selectedTurtle;
+    private @Getter @Setter MedicalRecord selectedMedicalRecord;
+    private @Getter @Setter Examination selectedExamination;
 
     private DataController() {}
 

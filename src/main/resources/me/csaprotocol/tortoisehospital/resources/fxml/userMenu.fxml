@@ -22,8 +22,8 @@
          <left>
             <VBox prefHeight="464.0" prefWidth="196.0" style="-fx-background-color: #282828;" BorderPane.alignment="CENTER">
                <children>
-                  <HBox prefHeight="22.0" prefWidth="186.0" />
-                  <Button fx:id="statisticsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="222.0" styleClass="buttonStats" stylesheets="@../css/button.css" text="Statistics" textAlignment="CENTER" textFill="WHITE">
+                  <HBox prefHeight="7.0" prefWidth="186.0" />
+                  <Button fx:id="statisticsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#onStatisticsClick" prefHeight="26.0" prefWidth="222.0" styleClass="buttonStats" stylesheets="@../css/button.css" text="Statistics" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -32,15 +32,24 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label prefHeight="34.0" prefWidth="190.0" text="Centri:" textFill="#aeaeae" />
+                  <Button fx:id="hospitalButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#onHospitalButtonClick" prefHeight="26.0" prefWidth="222.0" styleClass="buttonStats" stylesheets="@../css/button.css" text="Hospital" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/turtleHospitalLogo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label prefHeight="34.0" prefWidth="190.0" text="Centers:" textFill="#aeaeae" />
                   <ScrollPane prefHeight="249.0" prefWidth="186.0" stylesheets="@../css/scrollpane.css">
                      <content>
                         <VBox fx:id="subScrollCenter" prefHeight="244.0" prefWidth="181.0" />
                      </content>
                   </ScrollPane>
                   <HBox prefHeight="52.0" prefWidth="186.0" />
-                  <Label prefHeight="38.0" prefWidth="186.0" text="Vasche:" textFill="#aeaeae" />
-                  <ScrollPane prefHeight="322.0" prefWidth="186.0" stylesheets="@../css/scrollpane.css">
+                  <Label fx:id="tankLabel" prefHeight="38.0" prefWidth="186.0" text="Tanks:" textFill="#aeaeae" />
+                  <ScrollPane fx:id="tankScrollPane" prefHeight="322.0" prefWidth="186.0" stylesheets="@../css/scrollpane.css">
                      <content>
                         <VBox fx:id="subScrollTank" prefHeight="315.0" prefWidth="180.0" />
                      </content>
