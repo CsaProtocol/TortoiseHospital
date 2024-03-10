@@ -27,6 +27,7 @@ module me.csaprotocol.tortoisehospital {
     opens me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu to javafx.fxml;
 
     exports me.csaprotocol.tortoisehospital;
+    exports me.csaprotocol.tortoisehospital.events;
     exports me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu to com.google.common;
 
 }

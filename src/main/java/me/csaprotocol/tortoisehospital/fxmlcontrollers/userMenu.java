@@ -126,12 +126,20 @@ public class userMenu implements Initializable {
     public void setFifthLabel(String toSet, boolean visibility) { this.selectedObjectFifthLabel.setText(toSet);
         this.selectedObjectFifthLabel.setVisible(visibility); }
     public void setSelectedImgToCenter() {
-        Image img = new Image(Main.class.getResource("resources/images/center_icon.png").toString());
-        this.selectedObjectImg.setImage(img);
+        try {
+            Image img = new Image(Main.class.getResource("resources/images/center_icon.png").toString());
+            this.selectedObjectImg.setImage(img);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
     public void setSelectedImgToTank() {
-        Image img = new Image(Main.class.getResource("resources/images/tankLogo.png").toString());
-        this.selectedObjectImg.setImage(img);
+        try {
+            Image img = new Image(Main.class.getResource("resources/images/tankLogo.png").toString());
+            this.selectedObjectImg.setImage(img);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
 

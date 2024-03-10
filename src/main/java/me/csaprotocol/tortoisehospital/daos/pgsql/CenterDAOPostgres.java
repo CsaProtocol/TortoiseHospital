@@ -60,7 +60,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
             st.setString(1, ID);
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 Center center = new Center(
                         rs.getString("id_center"),
                         rs.getString("name")
