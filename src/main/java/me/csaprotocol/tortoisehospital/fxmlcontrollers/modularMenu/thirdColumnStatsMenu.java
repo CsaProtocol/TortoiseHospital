@@ -21,6 +21,8 @@ public class thirdColumnStatsMenu {
         ControllerOrchestrator co = new ControllerOrchestrator();
         Integer[] values = co.handleCenterStatistics(firstDate.getValue(), secondDate.getValue());
 
+        upperHBox.getChildren().clear();
+
         ConcentricRingChart chart = new ConcentricRingChart();
         ChartItem item = new ChartItem("Compromised", values[0]);
         ChartItem item2 = new ChartItem("Deep wounds", values[1]);

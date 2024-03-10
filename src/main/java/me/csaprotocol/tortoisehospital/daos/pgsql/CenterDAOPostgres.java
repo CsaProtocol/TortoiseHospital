@@ -95,6 +95,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
             st.setDate(2, java.sql.Date.valueOf(to));
             st.setString(3, centerID);
             ResultSet rs = st.executeQuery();
+            rs.next();
             values[0] = rs.getInt("compromised_t");
             values[1] = rs.getInt("deepwounded_t");
             values[2] = rs.getInt("lightwounded_t");
