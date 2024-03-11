@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import me.csaprotocol.tortoisehospital.Main;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
+import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 import me.csaprotocol.tortoisehospital.entities.Measurement;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.measurementButton;
 
@@ -51,19 +52,9 @@ public class thirdColumnTurtleMenu implements Initializable {
     @FXML private Button newMeasurementButton;
 
     public void addMeasurementButton(Measurement measurement) {
-        Node newButton = new Button();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/measurementButton.fxml")));
-            newButton = fxmlLoader.load();
-            measurementButton fxmlCo = fxmlLoader.getController();
-            fxmlCo.setDateLabel(measurement.getDate().toString());
-            fxmlCo.setMeasurementAssociated(measurement);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        measurementBox.getChildren().add(newButton);
+        GUIUtilsController guic = new GUIUtilsController();
+        measurementBox.getChildren().add(guic.addMeasurementButton(measurement));
     }
-
     public void clearMeasurementButtons() {
         measurementBox.getChildren().clear();
     }
@@ -75,7 +66,6 @@ public class thirdColumnTurtleMenu implements Initializable {
     public void setSexImgToMale() { genderImg.setImage(new Image(String.valueOf(Objects.requireNonNull(Main.class.getResource("resources/images/male.png"))))); }
     public void setSexImgToFemale() { genderImg.setImage(new Image(String.valueOf(Objects.requireNonNull(Main.class.getResource("resources/images/female.png"))))); }
 
-
     //Measurement
     public void setMeasurementDateLabel(String measurementDate) { measurementDateLabel.setText(measurementDate); }
     public void setLengthLabel(String length) { lengthLabel.setText("Length: " + length + " cm"); }
@@ -84,16 +74,12 @@ public class thirdColumnTurtleMenu implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        GUIUtilsController guic = new GUIUtilsController();
+
         //Create a rounded rectangle at runtime for the selectedTurtlePanel
-        Rectangle clip = new Rectangle(selectedTurtlePanel.getPrefWidth(), selectedTurtlePanel.getPrefHeight());
-        clip.setArcWidth(20);
-        clip.setArcHeight(20);
-        selectedTurtlePanel.setClip(clip);
+        selectedTurtlePanel.setClip(guic.setRectangleClip(selectedTurtlePanel.getPrefWidth(), selectedTurtlePanel.getPrefHeight()));
         //Create a rounded rectangle at runtime for the selectedMeasurementPanel
-        Rectangle clip2 = new Rectangle(selectedMeasurementPanel.getPrefWidth(), selectedMeasurementPanel.getPrefHeight());
-        clip2.setArcWidth(20);
-        clip2.setArcHeight(20);
-        selectedMeasurementPanel.setClip(clip2);
+        selectedMeasurementPanel.setClip(guic.setRectangleClip(selectedMeasurementPanel.getPrefWidth(), selectedMeasurementPanel.getPrefHeight()));
 
         //Set the spacing between the measurement buttons
         measurementBox.setSpacing(4);

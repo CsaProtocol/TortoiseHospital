@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
+import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 
 import java.util.ArrayList;
 
@@ -18,28 +19,20 @@ public class thirdColumnStatsMenu {
     @FXML private HBox upperHBox;
 
     @FXML private void onShowStatsClick() {
+        GUIUtilsController guc = new GUIUtilsController();
+
         ControllerOrchestrator co = new ControllerOrchestrator();
         Integer[] values = co.handleCenterStatistics(firstDate.getValue(), secondDate.getValue());
 
         upperHBox.getChildren().clear();
-
-        ConcentricRingChart chart = new ConcentricRingChart();
-        ChartItem item = new ChartItem("Compromised", values[0]);
-        ChartItem item2 = new ChartItem("Deep wounds", values[1]);
-        ChartItem item3 = new ChartItem("Light wounds", values[2]);
-        ChartItem item4 = new ChartItem("Normal", values[3]);
-        ChartItem item5 = new ChartItem("Perfect", values[4]);
-
-        item.setFill(javafx.scene.paint.Color.RED);
-        item2.setFill(javafx.scene.paint.Color.ORANGE);
-        item3.setFill(javafx.scene.paint.Color.CYAN);
-        item4.setFill(javafx.scene.paint.Color.GREEN);
-        item5.setFill(javafx.scene.paint.Color.WHITE);
-
-        chart.setItems(item, item2, item3, item4, item5);
-        upperHBox.getChildren().add(chart);
+        upperHBox.getChildren().add(guc.buildConcentricRingChartCenter(values));
         upperHBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        lowerHBox.getChildren().clear();
+        lowerHBox.getChildren().add(guc.buildCoxCombChartCenter(values));
+        lowerHBox.setAlignment(javafx.geometry.Pos.CENTER);
     }
+
     public void initialize() {
         firstDate.setPromptText("From");
         secondDate.setPromptText("To");

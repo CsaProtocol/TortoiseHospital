@@ -26,7 +26,7 @@ public class fourthColumnStatsMenu {
     @FXML private MFXDatePicker startDate;
     @FXML private AnchorPane turtleStats;
     @FXML private void onShowStatsClick() {
-        if(startDate.getValue() != null || endDate.getValue() != null) {
+        if(startDate.getValue() == null || endDate.getValue() == null) {
             try {
                 throw new CoreException("Please select a date range to view the stats");
             } catch (CoreException e) {
@@ -57,6 +57,7 @@ public class fourthColumnStatsMenu {
         XYPane lineChartPane = new XYPane(xySeries);
 
         XYChart<XYChartItem> lineChart = new XYChart<>(lineChartPane, grid, yAxisLeft, xAxisBottom);
+        turtleStats.getChildren().clear();
         turtleStats.getChildren().add(lineChart);
     }
 
@@ -71,7 +72,6 @@ public class fourthColumnStatsMenu {
             .tickLabelColor(Color.web("#82909B"))
             .tickMarkColor(Color.web("#82909B"))
             .majorTickMarksVisible(true)
-            .mediumTimeAxisTickLabelsVisible(true)
             .build();
         AnchorPane.setBottomAnchor(x, 0d);
         AnchorPane.setLeftAnchor(x, 25d);

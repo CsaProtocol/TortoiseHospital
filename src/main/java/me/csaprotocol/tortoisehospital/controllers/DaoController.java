@@ -7,6 +7,7 @@ import me.csaprotocol.tortoisehospital.entities.*;
 import me.csaprotocol.tortoisehospital.entities.enums.Sex;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -42,7 +43,7 @@ public class DaoController {
         return Objects.requireNonNull(DAOFactory.getTurtleDAO()).searchTurtle(toSearch);
     }
 
-    public Object[] getTurtleByID(String TurtleID) {
+    public Object[] getTurtleAndTankByID(String TurtleID) {
         return Objects.requireNonNull(DAOFactory.getTurtleDAO()).getTurtleAndTankByTurtleID(TurtleID);
     }
 
@@ -104,8 +105,8 @@ public class DaoController {
         Objects.requireNonNull(DAOFactory.getMedicalRecordDAO()).deleteMedicalRecord(internalID);
     }
 
-    public void deleteExamination(String internalID, LocalDate date, String vetNotes) {
-        Objects.requireNonNull(DAOFactory.getExaminationDAO()).deleteExamination(internalID, date, vetNotes);
+    public void deleteExamination(String internalID, LocalDateTime date) {
+        Objects.requireNonNull(DAOFactory.getExaminationDAO()).deleteExamination(internalID, date);
     }
 
     public Integer[] createCenterStatistics(LocalDate from, LocalDate to, String centerID) {
@@ -114,5 +115,9 @@ public class DaoController {
 
     public ObservableList<XYChartItem> createTurtleStats(String turtleID, LocalDate startDate, LocalDate endDate) {
         return Objects.requireNonNull(DAOFactory.getExaminationDAO()).createTurtleStats(turtleID, startDate, endDate);
+    }
+
+    public Turtle getTurtleByID(String turtleID) {
+        return Objects.requireNonNull(DAOFactory.getTurtleDAO()).getTurtleByID(turtleID);
     }
 }

@@ -16,6 +16,13 @@ public class Turtle {
         this.name = name;
     }
 
+    public Turtle(String ID, String name, String species, Sex sex) {
+        this.ID = ID;
+        this.name = name;
+        this.species = species;
+        this.sex = sex;
+    }
+
     @Override
     public String toString() {
         return "Turtle{" +

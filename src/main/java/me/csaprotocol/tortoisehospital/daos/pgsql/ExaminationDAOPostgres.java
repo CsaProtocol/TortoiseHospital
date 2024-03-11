@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
 
             while (rs.next()) {
                 Examination ex = new Examination();
-                ex.setDate(rs.getDate("ex_date").toLocalDate());
+                ex.setDate(rs.getTimestamp("ex_date").toLocalDateTime());
                 ex.setVet_notes(rs.getString("vet_notes"));
                 ex.setHead_status(translateStatus(rs.getString("head_status")));
                 ex.setEyes_status(translateStatus(rs.getString("eyes_status")));
@@ -99,15 +100,14 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
     }
 
     @Override
-    public void deleteExamination(String internalID, LocalDate date, String vetNotes) {
-        String query = "DELETE FROM examination WHERE internal_id = ? AND ex_date = ? AND vet_notes = ?";
+    public void deleteExamination(String internalID, LocalDateTime date) {
+        String query = "DELETE FROM examination WHERE internal_id = ? AND ex_date = ?";
 
         try {
             Connection conn = commonDataSource.getConnection();
             PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, internalID);
-            st.setDate(2, java.sql.Date.valueOf(date));
-            st.setString(3, vetNotes);
+            st.setTimestamp(2, java.sql.Timestamp.valueOf(date));
             st.executeUpdate();
 
         } catch (Exception e) {
@@ -117,19 +117,19 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
 
     @Override
     public ObservableList<XYChartItem> createTurtleStats(String turtleID, LocalDate startDate, LocalDate endDate) {
-        String query = "SELECT AvgHealth, ex_date FROM examination INNER JOIN medical_record ON internal_id = internal_id WHERE ex_date BETWEEN ? AND ? AND turtle_id = ?";
+        String query = "SELECT AvgHealth, ex_date FROM examination INNER JOIN medical_record ON examination.internal_id = medical_record.internal_id WHERE ex_date BETWEEN ? AND ? AND turtle_id = ?";
         ObservableList<XYChartItem> stats = new ObservableList<>();
         try {
             Connection conn = commonDataSource.getConnection();
             PreparedStatement st = conn.prepareStatement(query);
-            st.setDate(1, java.sql.Date.valueOf(startDate));
-            st.setDate(2, java.sql.Date.valueOf(endDate));
+            st.setTimestamp(1, java.sql.Timestamp.valueOf(startDate.atStartOfDay()));
+            st.setTimestamp(2, java.sql.Timestamp.valueOf(endDate.atStartOfDay()));
             st.setString(3, turtleID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                LocalDate toConvert = rs.getDate("ex_date").toLocalDate();
+                LocalDateTime toConvert = rs.getTimestamp("ex_date").toLocalDateTime();
                 Status avghealth = translateStatus(rs.getString("AvgHealth"));
-                long epoch = toConvert.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
+                long epoch = toConvert.toInstant(ZoneOffset.UTC).getEpochSecond();
                 stats.add(new XYChartItem(epoch, avghealth.getValue()));
             }
         } catch (SQLException e) {

@@ -14,4 +14,5 @@ public interface TurtleDAO {
     void updateTurtleTank(String turtleID, String centerID, int tankID);
     void updateTurtle(String turtleID, String name, String species, String sex);
     void deleteTurtle(String turtleID);
+    Turtle getTurtleByID(String turtleID);
 }

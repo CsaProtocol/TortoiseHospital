@@ -7,6 +7,7 @@ import me.csaprotocol.tortoisehospital.entities.enums.Sex;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
     public TurtleDAOPostgres() {
@@ -207,7 +208,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             throw new RuntimeException();
         }
     }
-
+    @Override
     public ArrayList<Turtle> getAllTurtles() {
         ArrayList<Turtle> turtles = new ArrayList<>();
         String query = "SELECT turtle_id, name FROM turtle";
@@ -228,5 +229,33 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             throw new RuntimeException();
         }
         return turtles;
+    }
+
+    @Override
+    public Turtle getTurtleByID(String turtleID) {
+        String query = "SELECT * FROM turtle WHERE turtle_id = ?";
+        try {
+            Connection conn = commonDataSource.getConnection();
+            assert conn != null;
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, turtleID);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Turtle turtle = new Turtle(
+                    rs.getString("turtle_id"),
+                    rs.getString("name")
+                );
+                turtle.setSpecies(rs.getString("species"));
+                if(Objects.equals(rs.getString("turtle_sex"), "M")) {
+                    turtle.setSex(Sex.Male);
+                } else {
+                    turtle.setSex(Sex.Female);
+                }
+                return turtle;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        return null;
     }
 }

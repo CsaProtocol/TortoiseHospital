@@ -125,7 +125,12 @@ public class ControllerOrchestrator {
 
     public void showDialogDeleteExamination(MouseEvent event, Pane content) {
         if(data.getSelectedExamination() == null)
-            return;
+            try {
+                throw new CoreException("No examination selected, please select one");
+            } catch (CoreException e) {
+                ExceptionHandler eh = new ExceptionHandler();
+                eh.handleException(e);
+            }
         dialogUtil dialog = new dialogUtil();
         dialog.showDialogDeleteExamination(event, content);
     }
@@ -354,7 +359,7 @@ public class ControllerOrchestrator {
 
     public void setSelectedTurtle(String turtleID) {
         DaoController dco = new DaoController();
-        Object[] TurtleAndTank = dco.getTurtleByID(turtleID);
+        Object[] TurtleAndTank = dco.getTurtleAndTankByID(turtleID);
         data.setSelectedTurtle((Turtle) TurtleAndTank[0]);
         thirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
         subSceneController.setTurtleIDLabel(data.getSelectedTurtle().getID());
@@ -374,8 +379,12 @@ public class ControllerOrchestrator {
         } else {
             subSceneController.setTankIDLabel("N/A");
         }
+    }
 
-        }
+    public void setSelectedTurtleStats(String turtleID) {
+        DaoController dco = new DaoController();
+        data.setSelectedTurtle(dco.getTurtleByID(turtleID));
+    }
 
     public void setSelectedMeasurement(Measurement measurementToFocus) {
         thirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
@@ -440,6 +449,7 @@ public class ControllerOrchestrator {
                 showMedicalRecordGUI();
                 break;
             case "statsPanel":
+                setSelectedTurtleStats(TurtleID);
                 break;
             case null:
                 showSubSceneTurtlePanel();
@@ -612,7 +622,7 @@ public class ControllerOrchestrator {
 
     public void handleExaminationDeletion() {
         DaoController dco = new DaoController();
-        dco.deleteExamination(data.getSelectedMedicalRecord().getInternalID(), data.getSelectedExamination().getDate(), data.getSelectedExamination().getVet_notes());
+        dco.deleteExamination(data.getSelectedMedicalRecord().getInternalID(), data.getSelectedExamination().getDate());
 
         Notifications.create()
             .title("Examination deleted")

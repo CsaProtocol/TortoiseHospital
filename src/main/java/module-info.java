@@ -17,7 +17,6 @@ module me.csaprotocol.tortoisehospital {
     requires org.controlsfx.controls;
     //Charts
     requires eu.hansolo.fx.charts;
-    requires com.pixelduke.javafx.dateaxis;
 
 
     opens me.csaprotocol.tortoisehospital to javafx.fxml;

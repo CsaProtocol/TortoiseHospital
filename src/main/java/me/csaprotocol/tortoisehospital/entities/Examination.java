@@ -5,6 +5,7 @@ import lombok.Setter;
 import me.csaprotocol.tortoisehospital.entities.enums.Status;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter @Setter
@@ -18,7 +19,7 @@ public class Examination {
     private Status beak_status;
     private Status nose_status;
     private String vet_notes;
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Override
     public String toString() {
