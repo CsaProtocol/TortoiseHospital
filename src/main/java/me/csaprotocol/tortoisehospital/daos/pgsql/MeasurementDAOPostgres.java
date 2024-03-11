@@ -1,5 +1,6 @@
 package me.csaprotocol.tortoisehospital.daos.pgsql;
 
+import io.github.palexdev.mfxeffects.ripple.base.Ripple;
 import me.csaprotocol.tortoisehospital.daos.MeasurementDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Measurement;
@@ -37,10 +38,9 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
 
             return measurements;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
-        return measurements;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
             st.setDate(5, java.sql.Date.valueOf(measurement.getDate()));
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
@@ -71,7 +71,7 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
             st.setDate(2, Date.valueOf(date));
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 }

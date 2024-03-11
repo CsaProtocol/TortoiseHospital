@@ -107,7 +107,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
         return turtles;
     }
@@ -130,7 +130,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
 
         return turtles;
@@ -154,7 +154,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             return rs.getString("turtle_id");
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
@@ -170,7 +170,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             st.setString(3, turtleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
@@ -190,7 +190,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             st.setString(4, turtleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
@@ -204,7 +204,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             st.setString(1, turtleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
@@ -225,7 +225,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
                 );
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
         return turtles;
     }

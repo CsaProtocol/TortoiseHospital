@@ -3,6 +3,7 @@ package me.csaprotocol.tortoisehospital.daos.pgsql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import me.csaprotocol.tortoisehospital.daos.EmployeeDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
@@ -26,8 +27,8 @@ public class EmployeeDAOPostgres extends PostgresDAO implements EmployeeDAO {
             if (!rs.next()) {
                 return false;
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
 
         return true;

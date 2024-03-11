@@ -35,7 +35,7 @@
             <Pane layoutX="134.0" prefHeight="222.0" prefWidth="204.0" style="-fx-background-color: #393D5A;">
                <children>
                   <Label fx:id="centerIDLabel" layoutX="82.0" layoutY="82.0" text="Center: CTR0000001" textFill="#aeaeae" />
-                  <Label fx:id="tankIDLabel" layoutX="149.0" layoutY="102.0" text="Tank: 4" textFill="#aeaeae" />
+                  <Label fx:id="tankIDLabel" layoutX="83.0" layoutY="100.0" text="Tank: 4" textFill="#aeaeae" />
                   <Label fx:id="speciesLabel" layoutX="16.0" layoutY="181.0" text="Species: Kinosternon scorpioides" textFill="#aeaeae" />
                   <Label fx:id="turtleNameLabel" layoutX="14.0" layoutY="24.0" prefHeight="18.0" prefWidth="100.0" text="Turtle" textFill="#f4f4f4">
                      <font>

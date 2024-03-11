@@ -1,5 +1,7 @@
 package me.csaprotocol.tortoisehospital.daos.pgsql;
 
+import eu.hansolo.fx.charts.data.XYChartItem;
+import eu.hansolo.toolbox.observables.ObservableList;
 import me.csaprotocol.tortoisehospital.daos.ExaminationDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Examination;
@@ -8,7 +10,9 @@ import me.csaprotocol.tortoisehospital.entities.enums.Status;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 
 public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDAO {
@@ -41,8 +45,8 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
 
                 examinations.add(ex);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
         return examinations;
     }
@@ -89,7 +93,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
             st.setString(10, selectedExamination.getVet_notes());
             st.executeUpdate();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException();
         }
     }
@@ -111,38 +115,49 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
         }
     }
 
+    @Override
+    public ObservableList<XYChartItem> createTurtleStats(String turtleID, LocalDate startDate, LocalDate endDate) {
+        String query = "SELECT AvgHealth, ex_date FROM examination INNER JOIN medical_record ON internal_id = internal_id WHERE ex_date BETWEEN ? AND ? AND turtle_id = ?";
+        ObservableList<XYChartItem> stats = new ObservableList<>();
+        try {
+            Connection conn = commonDataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setDate(1, java.sql.Date.valueOf(startDate));
+            st.setDate(2, java.sql.Date.valueOf(endDate));
+            st.setString(3, turtleID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                LocalDate toConvert = rs.getDate("ex_date").toLocalDate();
+                Status avghealth = translateStatus(rs.getString("AvgHealth"));
+                long epoch = toConvert.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
+                stats.add(new XYChartItem(epoch, avghealth.getValue()));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        return stats;
+    }
+
 
     public Status translateStatus(String status) {
-        switch(status) {
-            case "C":
-                return Status.Compromised;
-            case "D":
-                return Status.DeepWounds;
-            case "L":
-                return Status.SuperficialWounds;
-            case "N":
-                return Status.Normal;
-            case "P":
-                return Status.Perfect;
-            default:
-                throw new IllegalArgumentException("Invalid status code: " + status);
-        }
+        return switch (status) {
+            case "C" -> Status.Compromised;
+            case "D" -> Status.DeepWounds;
+            case "L" -> Status.SuperficialWounds;
+            case "N" -> Status.Normal;
+            case "P" -> Status.Perfect;
+            default -> throw new IllegalArgumentException("Invalid status code: " + status);
+        };
     }
 
     public String translateStatusInverse(String status) {
-        switch(status) {
-            case "Compromised":
-                return "C";
-            case "DeepWounds":
-                return "D";
-            case "SuperficialWounds":
-                return "L";
-            case "Normal":
-                return "N";
-            case "Perfect":
-                return "P";
-            default:
-                throw new IllegalArgumentException("Invalid status code: " + status);
-        }
+        return switch (status) {
+            case "Compromised" -> "C";
+            case "DeepWounds" -> "D";
+            case "SuperficialWounds" -> "L";
+            case "Normal" -> "N";
+            case "Perfect" -> "P";
+            default -> throw new IllegalArgumentException("Invalid status code: " + status);
+        };
     }
 }

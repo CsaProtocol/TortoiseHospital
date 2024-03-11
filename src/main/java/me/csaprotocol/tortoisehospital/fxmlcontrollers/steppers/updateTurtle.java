@@ -28,8 +28,7 @@ public class updateTurtle implements Initializable {
     private final MFXComboBox<String> speciesField;
     private final MFXComboBox<String> sexField;
     private final MFXCheckbox checkbox;
-    @FXML
-    private MFXStepper stepper;
+    @FXML private MFXStepper stepper;
     @FXML private GridPane grid;
 
     public updateTurtle() {

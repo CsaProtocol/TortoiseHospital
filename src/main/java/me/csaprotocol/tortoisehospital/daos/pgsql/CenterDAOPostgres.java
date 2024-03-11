@@ -45,7 +45,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
                 );
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
 
         return centers;
@@ -78,7 +78,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
         return null;
     }
@@ -102,7 +102,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
             values[3] = rs.getInt("normal_t");
             values[4] = rs.getInt("perfect_t");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
         return values;
     }

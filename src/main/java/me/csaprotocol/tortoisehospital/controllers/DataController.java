@@ -15,9 +15,9 @@ public class DataController {
 
     private @Getter @Setter Stage provisionalFocus;
     private @Getter @Setter FXMLLoader currentScene;
+    private @Getter @Setter String currentSubSceneName;
     private @Getter @Setter FXMLLoader currentSubSceneThirdColumn;
     private @Getter @Setter FXMLLoader currentSubSceneFourthColumn;
-    private @Getter @Setter String currentSubSceneName;
     private @Getter @Setter Employee loggedUser;
 
     private @Getter @Setter ArrayList<Center> centerArray;

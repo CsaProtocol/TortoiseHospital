@@ -1,51 +1,99 @@
 package me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu;
 
-import javafx.collections.FXCollections;
+import eu.hansolo.fx.charts.*;
+import eu.hansolo.fx.charts.data.XYChartItem;
+import eu.hansolo.fx.charts.series.XYSeries;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.geometry.Orientation;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
+import me.csaprotocol.tortoisehospital.exceptions.CoreException;
+import me.csaprotocol.tortoisehospital.exceptions.ExceptionHandler;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.ZoneOffset;
+
 
 public class fourthColumnStatsMenu {
 
-    @FXML
-    private Pane fourthColumn;
-
-    public void showTurtleStats() {
-        // Create the x and y axes
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis(1, 5, 1);
-
-        // Set labels for the x-axis (dates)
-        xAxis.setCategories(FXCollections.observableArrayList(
-            LocalDate.now().minusDays(4).toString(),
-            LocalDate.now().minusDays(3).toString(),
-            LocalDate.now().minusDays(2).toString(),
-            LocalDate.now().minusDays(1).toString(),
-            LocalDate.now().toString()
-        ));
-
-        // Create the line chart
-        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Example LineChart");
-
-        // Define a series
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Example Series");
-
-        // Add data to the series
-        series.getData().add(new XYChart.Data<>(LocalDate.now().minusDays(4).toString(), 2));
-        series.getData().add(new XYChart.Data<>(LocalDate.now().minusDays(3).toString(), 3));
-        series.getData().add(new XYChart.Data<>(LocalDate.now().minusDays(2).toString(), 4));
-        series.getData().add(new XYChart.Data<>(LocalDate.now().minusDays(1).toString(), 5));
-        series.getData().add(new XYChart.Data<>(LocalDate.now().toString(), 1));
-
-        // Add the series to the chart
-        lineChart.getData().add(series);
+    @FXML private MFXDatePicker endDate;
+    @FXML private Pane fourthColumn;
+    @FXML private MFXButton showCenterStatsButton;
+    @FXML private MFXDatePicker startDate;
+    @FXML private AnchorPane turtleStats;
+    @FXML private void onShowStatsClick() {
+        if(startDate.getValue() != null || endDate.getValue() != null) {
+            try {
+                throw new CoreException("Please select a date range to view the stats");
+            } catch (CoreException e) {
+                ExceptionHandler eh = new ExceptionHandler();
+                eh.handleException(e.getMessage());
+            }
+        }
+        showTurtleStats();
     }
 
+    public void showTurtleStats() {
+        GUIUtilsController guiC = new GUIUtilsController();
+        XYSeries<XYChartItem> xySeries = guiC.createData(startDate.getValue(), endDate.getValue());
+
+        Axis xAxisBottom = createXAxis(startDate.getValue().atStartOfDay().toInstant(ZoneOffset.UTC),
+                                        endDate.getValue().atStartOfDay().toInstant(ZoneOffset.UTC));
+        Axis yAxisLeft = createYAxis();
+
+        Grid grid = GridBuilder.create(xAxisBottom, yAxisLeft)
+            .gridLinePaint(Color.web("#384C57"))
+            .minorHGridLinesVisible(false)
+            .mediumHGridLinesVisible(false)
+            .minorVGridLinesVisible(false)
+            .mediumVGridLinesVisible(false)
+            .gridLineDashes(4, 4)
+            .build();
+
+        XYPane lineChartPane = new XYPane(xySeries);
+
+        XYChart<XYChartItem> lineChart = new XYChart<>(lineChartPane, grid, yAxisLeft, xAxisBottom);
+        turtleStats.getChildren().add(lineChart);
+    }
+
+    private Axis createXAxis(Instant start, Instant end) {
+        Axis x = AxisBuilder.create(Orientation.HORIZONTAL, Position.BOTTOM)
+            .type(AxisType.TIME)
+            .setStart(Instant.from(start))
+            .setEnd(Instant.from(end))
+            .autoScale(true)
+            .autoFontSize(true)
+            .axisColor(Color.web("#82909B"))
+            .tickLabelColor(Color.web("#82909B"))
+            .tickMarkColor(Color.web("#82909B"))
+            .majorTickMarksVisible(true)
+            .mediumTimeAxisTickLabelsVisible(true)
+            .build();
+        AnchorPane.setBottomAnchor(x, 0d);
+        AnchorPane.setLeftAnchor(x, 25d);
+        AnchorPane.setRightAnchor(x, 25d);
+        return x;
+    }
+
+    private Axis createYAxis() {
+        Axis y = AxisBuilder.create(Orientation.VERTICAL, Position.LEFT)
+            .type(AxisType.TEXT)
+            .categories("P", "N", "L", "D", "C", "Dead")
+            .minValue(0)
+            .maxValue(6)
+            .autoScale(true)
+            .autoFontSize(true)
+            .axisColor(Color.web("#82909B"))
+            .tickLabelColor(Color.web("#82909B"))
+            .tickMarkColor(Color.web("#82909B"))
+            .build();
+        AnchorPane.setTopAnchor(y, 0d);
+        AnchorPane.setBottomAnchor(y, 25d);
+        AnchorPane.setLeftAnchor(y, 0d);
+        return y;
+    }
 }

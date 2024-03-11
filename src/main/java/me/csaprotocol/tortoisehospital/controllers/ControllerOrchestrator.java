@@ -1,5 +1,7 @@
 package me.csaprotocol.tortoisehospital.controllers;
 
+import eu.hansolo.fx.charts.data.XYChartItem;
+import eu.hansolo.toolbox.observables.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,6 +16,8 @@ import javafx.stage.Stage;
 import me.csaprotocol.tortoisehospital.Main;
 import me.csaprotocol.tortoisehospital.entities.*;
 import me.csaprotocol.tortoisehospital.entities.enums.Sex;
+import me.csaprotocol.tortoisehospital.exceptions.CoreException;
+import me.csaprotocol.tortoisehospital.exceptions.ExceptionHandler;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.dialogUtil;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.fourthColumnTurtleMenu;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.thirdColumnTurtleMenu;
@@ -33,34 +37,64 @@ public class ControllerOrchestrator {
     //Interfaces for new things to insert in DB
     public void showNewTurtleGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newTurtle.fxml"));
-        showOtherStage(fxmlLoader, stage);
+        try {
+            showOtherStage(fxmlLoader, stage);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
     }
 
     public void showNewMedicalRecordGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newMedicalRecord.fxml"));
-        showOtherStage(fxmlLoader, stage);
+        try {
+            showOtherStage(fxmlLoader, stage);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
     }
 
     public void showNewExaminationGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newExamination.fxml"));
-        showOtherStage(fxmlLoader, stage);
+        try {
+            showOtherStage(fxmlLoader, stage);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
     }
 
     public void showNewMeasurementGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/newMeasurement.fxml"));
-        showOtherStage(fxmlLoader, stage);
+        try {
+            showOtherStage(fxmlLoader, stage);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
     }
 
     //Update Interfaces
 
     public void showUpdateTurtleGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/updateTurtle.fxml"));
-        showOtherStage(fxmlLoader, stage);
+        try {
+            showOtherStage(fxmlLoader, stage);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
     }
 
     public void showUpdateExaminationGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/menuUtils/updateExamination.fxml"));
-        showOtherStage(fxmlLoader, stage);
+        try {
+            showOtherStage(fxmlLoader, stage);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
     }
 
     public void showDialogReleaseTurtle(MouseEvent event, Pane content) {
@@ -96,7 +130,7 @@ public class ControllerOrchestrator {
         dialog.showDialogDeleteExamination(event, content);
     }
 
-    public void showOtherStage(FXMLLoader fxmlLoader, Stage stage) {
+    public void showOtherStage(FXMLLoader fxmlLoader, Stage stage) throws CoreException {
         try {
             Scene scene = new Scene(fxmlLoader.load());
             data.setProvisionalFocus(stage);
@@ -105,7 +139,7 @@ public class ControllerOrchestrator {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new CoreException("Error loading new stage", e);
         }
     }
 
@@ -114,13 +148,23 @@ public class ControllerOrchestrator {
     public void showLoginGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/login.fxml"));
 
-        showNewGUI(stage, fxmlLoader);
+        try {
+            showNewGUI(stage, fxmlLoader);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
     }
 
     public void showUserMenuGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/userMenu.fxml"));
         Stage stage = new Stage();
-        showNewGUI(stage, fxmlLoader);
+        try {
+            showNewGUI(stage, fxmlLoader);
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e);
+        }
 
         userMenu currentSceneController = data.getCurrentScene().getController();
         DaoController dco = new DaoController();
@@ -198,7 +242,7 @@ public class ControllerOrchestrator {
         }
     }
 
-    private void showNewGUI(Stage stage, FXMLLoader fxmlLoader) {
+    private void showNewGUI(Stage stage, FXMLLoader fxmlLoader) throws CoreException {
         try {
             Scene scene = new Scene(fxmlLoader.load());
             data.setCurrentScene(fxmlLoader);
@@ -207,7 +251,7 @@ public class ControllerOrchestrator {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new CoreException("Error loading new GUI", e);
         } finally {
             data.setCurrentScene(fxmlLoader);
         }
@@ -323,9 +367,15 @@ public class ControllerOrchestrator {
 
         String centerID = (String) TurtleAndTank[2];
         subSceneController.setCenterIDLabel(Objects.requireNonNullElse(centerID, "N/A"));
-        String tankID = String.valueOf((int) TurtleAndTank[1]);
-        subSceneController.setTankIDLabel(Objects.requireNonNullElse(tankID, "N/A"));
-    }
+
+        if(TurtleAndTank[1] != null) {
+            String tankID = String.valueOf((int) TurtleAndTank[1]);
+            subSceneController.setTankIDLabel(tankID);
+        } else {
+            subSceneController.setTankIDLabel("N/A");
+        }
+
+        }
 
     public void setSelectedMeasurement(Measurement measurementToFocus) {
         thirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
@@ -577,5 +627,10 @@ public class ControllerOrchestrator {
     public Integer[] handleCenterStatistics(LocalDate from, LocalDate to) {
         DaoController dc = new DaoController();
         return dc.createCenterStatistics(from, to, data.getSelectedCenter().getID());
+    }
+
+    public ObservableList<XYChartItem> handleTurtleStats(LocalDate startDate, LocalDate endDate) {
+        DaoController dc = new DaoController();
+        return dc.createTurtleStats(data.getSelectedTurtle().getID(), startDate, endDate);
     }
 }

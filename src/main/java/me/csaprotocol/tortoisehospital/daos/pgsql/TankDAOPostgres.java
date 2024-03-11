@@ -32,10 +32,10 @@ public class TankDAOPostgres extends PostgresDAO implements TankDAO {
                                 rs.getInt("capacity")
                         )
                 );
-            }
+            } return tanks;
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } return tanks;
+            throw new RuntimeException();
+        }
     }
 
     public Tank getTankByID(int tankID, String centerID) {
@@ -54,9 +54,9 @@ public class TankDAOPostgres extends PostgresDAO implements TankDAO {
                         rs.getString("center_id"),
                         rs.getInt("capacity")
                 );
-            }
+            } return null;
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } return null;
+            throw new RuntimeException();
+        }
     }
 }

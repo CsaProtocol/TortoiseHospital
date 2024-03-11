@@ -15,4 +15,26 @@ public class Turtle {
         this.ID = ID;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Turtle{" +
+            "ID='" + ID + '\'' +
+            ", name='" + name + '\'' +
+            ", species='" + species + '\'' +
+            ", sex='" + sex + '\'' +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Turtle turtle = (Turtle) obj;
+        return ID.equals(turtle.ID) &&
+            name.equals(turtle.name) &&
+            species.equals(turtle.species) &&
+            sex.equals(turtle.sex);
+    }
 }

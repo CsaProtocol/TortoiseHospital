@@ -15,4 +15,25 @@ public class Employee {
     private LocalDate birthDate;
     private Profile profileType;
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "ID='" + ID + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", profileType=" + profileType +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null || getClass() != obj.getClass()) return false;
+        if(obj == this) return true;
+        Employee employee = (Employee) obj;
+        return employee.ID.equals(this.ID) && employee.name.equals(this.name)
+            && employee.lastName.equals(this.lastName) && employee.birthDate.equals(this.birthDate)
+            && employee.profileType.equals(this.profileType);
+    }
+
 }
