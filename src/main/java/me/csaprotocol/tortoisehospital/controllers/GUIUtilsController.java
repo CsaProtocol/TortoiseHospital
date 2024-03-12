@@ -32,9 +32,11 @@ import me.csaprotocol.tortoisehospital.Main;
 import me.csaprotocol.tortoisehospital.entities.Examination;
 import me.csaprotocol.tortoisehospital.entities.Measurement;
 import me.csaprotocol.tortoisehospital.entities.MedicalRecord;
+import me.csaprotocol.tortoisehospital.exceptions.CoreException;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.examinationButton;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.measurementButton;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.medicalRecordButton;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtleButton;
 import org.controlsfx.control.PopOver;
 
 import java.io.IOException;
@@ -43,6 +45,41 @@ import java.util.List;
 import java.util.Objects;
 
 public class GUIUtilsController {
+    //Add center button
+    public Button addCenterButton(String centerID) {
+        Button newButton = new Button();
+        try {
+            newButton = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/centerButton.fxml")));
+            newButton.setText(centerID);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } return newButton;
+    }
+
+    //Add tank button
+    public Button addTankButton(String tankID) {
+        Button newButton = new Button();
+        try {
+            newButton = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/tankButton.fxml")));
+            newButton.setText(tankID);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } return newButton;
+    }
+
+    //Third column: turtle button
+    public Node addTurtleButton(String TurtleID, String TurtleName) {
+        Node newButton = new Button();
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/turtleButton.fxml")));
+            newButton = loader.load();
+            turtleButton co = loader.getController();
+            co.setIdTurtleLabel(TurtleID);
+            co.setNameTurtleLabel(TurtleName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } return newButton;
+    }
 
     //Third Column: measurement Button
     public Node addMeasurementButton(Measurement measurement) {
@@ -107,25 +144,25 @@ public class GUIUtilsController {
     }
 
     //Fourth column: Turtle Stats
-    public XYSeries<XYChartItem> createData(LocalDate startDate, LocalDate endDate) {
+    public XYSeries<XYChartItem> createData(LocalDate startDate, LocalDate endDate) throws CoreException {
         ControllerOrchestrator co = new ControllerOrchestrator();
 
-        @SuppressWarnings("unchecked")
-        XYSeries<XYChartItem> xySeries = XYSeriesBuilder.create()
-            .items(co.handleTurtleStats(startDate, endDate))
-            .chartType(ChartType.SMOOTH_LINE)
-            .fill(Color.web("#00AEF520"))
-            .stroke(Color.web("#00AEF5"))
-            .symbolFill(Color.web("#00AEF5"))
-            .symbolStroke(Color.web("#293C47"))
-            .symbolSize(6)
-            .strokeWidth(2)
-            .animated(true)
-            .symbol(Symbol.CIRCLE)
-            .symbolsVisible(true)
-            .build();
+            @SuppressWarnings("unchecked")
+            XYSeries<XYChartItem> xySeries = XYSeriesBuilder.create()
+                .items(co.handleTurtleStats(startDate, endDate))
+                .chartType(ChartType.SMOOTH_LINE)
+                .fill(Color.web("#00AEF520"))
+                .stroke(Color.web("#00AEF5"))
+                .symbolFill(Color.web("#00AEF5"))
+                .symbolStroke(Color.web("#293C47"))
+                .symbolSize(6)
+                .strokeWidth(2)
+                .animated(true)
+                .symbol(Symbol.CIRCLE)
+                .symbolsVisible(true)
+                .build();
 
-        return xySeries;
+            return xySeries;
     }
 
     //Third column: Center stats
@@ -262,7 +299,15 @@ public class GUIUtilsController {
         return List.of(firstStep, secondStep, thirdStep);
     }
 
-    private MFXTextField labelText(String text) {
+    public void textFieldCreation(MFXTextField textField, String text) {
+        textField.setPromptText(text);
+        textField.setMinWidth(200);
+        textField.setMaxWidth(200);
+        textField.setMinHeight(30);
+        textField.setMaxHeight(30);
+    }
+
+    public MFXTextField labelText(String text) {
         MFXTextField label = MFXTextField.asLabel(text);
         label.setPrefWidth(200);
         label.setMinWidth(Region.USE_PREF_SIZE);
@@ -270,6 +315,14 @@ public class GUIUtilsController {
         label.setMinHeight(30);
         label.setMaxHeight(30);
         return label;
+    }
+
+    public void popOverCreation(Node node, String message) {
+        Label explanationLabel = new Label(message);
+        PopOver explanationPopOver = new PopOver(explanationLabel);
+        explanationPopOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+        node.setOnMouseEntered(event -> explanationPopOver.show(node));
+        node.setOnMouseExited(event -> explanationPopOver.hide());
     }
 
 }

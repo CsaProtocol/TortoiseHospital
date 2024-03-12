@@ -6,6 +6,7 @@ import eu.hansolo.fx.charts.series.XYSeries;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -14,11 +15,13 @@ import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 import me.csaprotocol.tortoisehospital.exceptions.CoreException;
 import me.csaprotocol.tortoisehospital.exceptions.ExceptionHandler;
 
+import java.net.URL;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.ResourceBundle;
 
 
-public class fourthColumnStatsMenu {
+public class fourthColumnStatsMenu implements Initializable {
 
     @FXML private MFXDatePicker endDate;
     @FXML private Pane fourthColumn;
@@ -38,8 +41,23 @@ public class fourthColumnStatsMenu {
     }
 
     public void showTurtleStats() {
-        GUIUtilsController guiC = new GUIUtilsController();
-        XYSeries<XYChartItem> xySeries = guiC.createData(startDate.getValue(), endDate.getValue());
+        XYSeries<XYChartItem> xySeries;
+
+        try {
+            if(startDate.getValue() == null || endDate.getValue() == null) {
+                throw new CoreException("Please select a date range to view the stats");
+            }
+            if(startDate.getValue().isAfter(endDate.getValue())) {
+                throw new CoreException("Start date cannot be after end date");
+            }
+
+            GUIUtilsController guiC = new GUIUtilsController();
+            xySeries = guiC.createData(startDate.getValue(), endDate.getValue());
+        } catch (CoreException e) {
+            ExceptionHandler eh = new ExceptionHandler();
+            eh.handleException(e.getMessage());
+            return;
+        }
 
         Axis xAxisBottom = createXAxis(startDate.getValue().atStartOfDay().toInstant(ZoneOffset.UTC),
                                         endDate.getValue().atStartOfDay().toInstant(ZoneOffset.UTC));
@@ -95,5 +113,11 @@ public class fourthColumnStatsMenu {
         AnchorPane.setBottomAnchor(y, 25d);
         AnchorPane.setLeftAnchor(y, 0d);
         return y;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        startDate.setPromptText("From");
+        endDate.setPromptText("To");
     }
 }

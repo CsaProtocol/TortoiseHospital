@@ -69,7 +69,7 @@ public class thirdColumnTurtleMenu implements Initializable {
     //Measurement
     public void setMeasurementDateLabel(String measurementDate) { measurementDateLabel.setText(measurementDate); }
     public void setLengthLabel(String length) { lengthLabel.setText("Length: " + length + " cm"); }
-    public void setWeightLabel(String weight) { weightLabel.setText("Weight: " + weight + " g"); }
+    public void setWeightLabel(String weight) { weightLabel.setText("Weight: " + weight + " Kg"); }
     public void setWidthLabel(String width) { widthLabel.setText("Width: " + width + " cm"); }
 
     @Override

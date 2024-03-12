@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import me.csaprotocol.tortoisehospital.Main;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
+import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtleButton;
 import org.controlsfx.control.PopOver;
 
@@ -58,25 +59,13 @@ public class userMenu implements Initializable {
 
     //First FXML column methods
     public void addCenterButton(String CenterID) {
-        Button newButton = new Button();
-        try {
-            newButton = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/centerButton.fxml")));
-            newButton.setText(CenterID);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        subScrollCenter.getChildren().add(newButton);
+        GUIUtilsController guic = new GUIUtilsController();
+        subScrollCenter.getChildren().add(guic.addCenterButton(CenterID));
     }
 
     public void addTankButton(Integer TankID) {
-        Button newButton = new Button();
-        try {
-            newButton = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/tankButton.fxml")));
-            newButton.setText(TankID.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        subScrollTank.getChildren().add(newButton);
+        GUIUtilsController guic = new GUIUtilsController();
+        subScrollTank.getChildren().add(guic.addTankButton(TankID.toString()));
     }
 
     public void clearTanks() {
@@ -95,17 +84,8 @@ public class userMenu implements Initializable {
     }
 
     public void addTurtleButton(String TurtleID, String TurtleName) {
-        Node newButton = new Button();
-        try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/turtleButton.fxml")));
-            newButton = loader.load();
-            turtleButton co = loader.getController();
-            co.setIdTurtleLabel(TurtleID);
-            co.setNameTurtleLabel(TurtleName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        subScrollTurtle.getChildren().add(newButton);
+        GUIUtilsController guic = new GUIUtilsController();
+        subScrollTurtle.getChildren().add(guic.addTurtleButton(TurtleID, TurtleName));
     }
 
     public void clearTurtles() {
@@ -142,7 +122,6 @@ public class userMenu implements Initializable {
         }
     }
 
-
     //Third FXML column methods
     public void showSpinner(boolean visibility) {
         progressSpinner.setVisible(visibility);
@@ -177,13 +156,10 @@ public class userMenu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         scrollPaneTurtle.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPaneTurtle.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        hospitalButton.setVisible(false);
 
-        //PopOver for addTurtleButton: explanation of what the button does
-        Label explanationLabel = new Label(" First access for a new turtle");
-        PopOver explanationPopOver = new PopOver(explanationLabel);
-        explanationPopOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
-        addTurtleButton.setOnMouseEntered(event -> explanationPopOver.show(addTurtleButton));
-        addTurtleButton.setOnMouseExited(event -> explanationPopOver.hide());
+        GUIUtilsController guic = new GUIUtilsController();
+        guic.popOverCreation(addTurtleButton, "First access for a new turtle");
     }
 
     public void setTankVisibility(boolean visibility) {
@@ -196,6 +172,8 @@ public class userMenu implements Initializable {
         setTankVisibility(true);
         hospitalButton.setVisible(false);
         statisticsButton.setVisible(true);
+        ControllerOrchestrator co = new ControllerOrchestrator();
+        co.showSubSceneTurtlePanel();
     }
 
     @FXML
@@ -204,6 +182,6 @@ public class userMenu implements Initializable {
         hospitalButton.setVisible(true);
         statisticsButton.setVisible(false);
         ControllerOrchestrator co = new ControllerOrchestrator();
-        co.handleStatsClick();
+        co.showSubSceneStatsPanel();
     }
 }

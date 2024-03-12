@@ -8,14 +8,12 @@ public class ExceptionHandler {
                 .title("Error")
                 .text("An error occurred, please contact an administrator.")
                 .showError();
-
-        e.printStackTrace();
         //TODO log the error with log4j
     }
 
     public void handleException(String message) {
         Notifications.create()
-                .title("Error")
+                .title("Warning")
                 .text(message)
                 .showWarning();
     }

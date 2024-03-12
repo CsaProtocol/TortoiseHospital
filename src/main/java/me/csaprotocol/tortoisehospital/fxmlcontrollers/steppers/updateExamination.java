@@ -16,6 +16,9 @@ import javafx.scene.paint.Color;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
 import me.csaprotocol.tortoisehospital.controllers.DataController;
 import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
+import me.csaprotocol.tortoisehospital.exceptions.CoreException;
+import me.csaprotocol.tortoisehospital.exceptions.ExceptionHandler;
+import org.xml.sax.ErrorHandler;
 
 import java.net.URL;
 import java.util.List;
@@ -51,6 +54,7 @@ public class updateExamination implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         DataController dc = DataController.getInstance();
         GUIUtilsController guic = new GUIUtilsController();
+
         List<MFXStepperToggle> toggles = guic.ExaminationAuxStepperCreation(vetNotes, head_statusField, eyes_statusField, beak_statusField, neck_statusField, nose_statusField, fins_statusField, tail_statusField, checkbox);
 
         head_statusField.setFloatingText("Head status");

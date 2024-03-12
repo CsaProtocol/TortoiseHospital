@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
+import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 
 import java.net.URL;
 import java.util.List;
@@ -39,14 +40,19 @@ public class newMeasurement implements Initializable {
     }
 
     private List<MFXStepperToggle> stepperCreationAuxiliary() {
+        GUIUtilsController guic = new GUIUtilsController();
         measurementDateField.setPromptText("Measurement Date");
-        widthField.setPromptText("Width");
-        lengthField.setPromptText("Length");
-        weightField.setPromptText("Weight");
+        guic.textFieldCreation(widthField, "Width");
+        widthField.measureUnitProperty().setValue("cm");
+        guic.textFieldCreation(lengthField, "Length");
+        lengthField.measureUnitProperty().setValue("cm");
+        guic.textFieldCreation(weightField, "Weight");
+        weightField.measureUnitProperty().setValue("Kg");
 
         MFXStepperToggle firstStep = new MFXStepperToggle("General info", new MFXFontIcon("fas-plus", 16));
         VBox firstStepContent = new VBox();
-        firstStepContent.setSpacing(3);
+        firstStepContent.setAlignment(Pos.CENTER);
+        firstStepContent.setSpacing(10);
         firstStepContent.getChildren().addAll(measurementDateField, widthField, lengthField, weightField);
         firstStep.setContent(firstStepContent);
 
@@ -59,8 +65,9 @@ public class newMeasurement implements Initializable {
     }
 
     private Node createCheckInfoContent() {
-        MFXTextField immutableMeasurementDateLabel = labelText("Measurement Date: ");
-        MFXTextField measurementDateLabel = labelText("");
+        GUIUtilsController guic = new GUIUtilsController();
+        MFXTextField immutableMeasurementDateLabel = guic.labelText("Measurement Date: ");
+        MFXTextField measurementDateLabel = guic.labelText("");
         measurementDateLabel.textProperty().bind(
             Bindings.createStringBinding(
                 () -> measurementDateField.getValue() != null ? String.valueOf(measurementDateField.getValue()) : "",
@@ -68,16 +75,16 @@ public class newMeasurement implements Initializable {
             )
         );
 
-        MFXTextField immutableWidthLabel = labelText("Width: ");
-        MFXTextField widthLabel = labelText("");
+        MFXTextField immutableWidthLabel = guic.labelText("Width: ");
+        MFXTextField widthLabel = guic.labelText("");
         widthLabel.textProperty().bind(widthField.textProperty());
 
-        MFXTextField immutableLengthLabel = labelText("Length: ");
-        MFXTextField lengthLabel = labelText("");
+        MFXTextField immutableLengthLabel = guic.labelText("Length: ");
+        MFXTextField lengthLabel = guic.labelText("");
         lengthLabel.textProperty().bind(lengthField.textProperty());
 
-        MFXTextField immutableWeightLabel = labelText("Weight: ");
-        MFXTextField weightLabel = labelText("");
+        MFXTextField immutableWeightLabel = guic.labelText("Weight: ");
+        MFXTextField weightLabel = guic.labelText("");
         weightLabel.textProperty().bind(weightField.textProperty());
 
         HBox dateBox = new HBox(10, immutableMeasurementDateLabel, measurementDateLabel);
@@ -106,15 +113,5 @@ public class newMeasurement implements Initializable {
             });
 
         return content;
-    }
-
-    private MFXTextField labelText(String text) {
-        MFXTextField label = MFXTextField.asLabel(text);
-        label.setPrefWidth(200);
-        label.setMinWidth(Region.USE_PREF_SIZE);
-        label.setMaxWidth(Region.USE_PREF_SIZE);
-        label.setMinHeight(30);
-        label.setMaxHeight(30);
-        return label;
     }
 }

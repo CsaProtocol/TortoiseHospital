@@ -129,7 +129,8 @@ public class ControllerOrchestrator {
                 throw new CoreException("No examination selected, please select one");
             } catch (CoreException e) {
                 ExceptionHandler eh = new ExceptionHandler();
-                eh.handleException(e);
+                eh.handleException(e.getMessage());
+                return;
             }
         dialogUtil dialog = new dialogUtil();
         dialog.showDialogDeleteExamination(event, content);
@@ -272,7 +273,7 @@ public class ControllerOrchestrator {
         data.setProvisionalFocus(null);
     }
 
-    private void showSubSceneStatsPanel() {
+    public void showSubSceneStatsPanel() {
         FXMLLoader thirdColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/statsMenu/thirdColumnStatsMenu.fxml"));
         FXMLLoader fourthColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/statsMenu/fourthColumnStatsMenu.fxml"));
         data.setCurrentSubSceneThirdColumn(thirdColumnFXMLLoader);
@@ -280,7 +281,7 @@ public class ControllerOrchestrator {
         data.setCurrentSubSceneName("statsPanel");
         showSubScene(thirdColumnFXMLLoader, fourthColumnFXMLLoader);
     }
-    private void showSubSceneTurtlePanel() {
+    public void showSubSceneTurtlePanel() {
         FXMLLoader thirdColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/turtleMenu/thirdColumnTurtleMenu.fxml"));
         FXMLLoader fourthColumnFXMLLoader = new FXMLLoader(Main.class.getResource("resources/fxml/modularMenu/turtleMenu/fourthColumnTurtleMenu.fxml"));
         data.setCurrentSubSceneThirdColumn(thirdColumnFXMLLoader);
@@ -437,10 +438,6 @@ public class ControllerOrchestrator {
     }
 
     //Click handling
-    public void handleStatsClick() {
-        showSubSceneStatsPanel();
-    }
-
     public void handleTurtleClick(String TurtleID) {
         switch(data.getCurrentSubSceneName()) {
             case "turtlePanel":
@@ -634,12 +631,18 @@ public class ControllerOrchestrator {
     }
 
     //Statistics
-    public Integer[] handleCenterStatistics(LocalDate from, LocalDate to) {
+    public Integer[] handleCenterStatistics(LocalDate from, LocalDate to) throws CoreException {
+        if(Objects.isNull(data.getSelectedCenter())) {
+            throw new CoreException("No center selected, please select one from the column on the left");
+        }
         DaoController dc = new DaoController();
         return dc.createCenterStatistics(from, to, data.getSelectedCenter().getID());
     }
 
-    public ObservableList<XYChartItem> handleTurtleStats(LocalDate startDate, LocalDate endDate) {
+    public ObservableList<XYChartItem> handleTurtleStats(LocalDate startDate, LocalDate endDate) throws CoreException {
+        if(Objects.isNull(data.getSelectedTurtle())) {
+            throw new CoreException("No turtle selected, please select one from the column on the left");
+        }
         DaoController dc = new DaoController();
         return dc.createTurtleStats(data.getSelectedTurtle().getID(), startDate, endDate);
     }
