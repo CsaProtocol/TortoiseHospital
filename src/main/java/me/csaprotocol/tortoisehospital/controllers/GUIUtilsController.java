@@ -255,8 +255,8 @@ public class GUIUtilsController {
         secondStep.setContent(secondStepContent);
 
         MFXStepperToggle thirdStep = new MFXStepperToggle("Check info", new MFXFontIcon("fas-check", 16, Color.web("#ff666a")));
-        //Node thirdStepContent = createCheckInfoContent();
-        //thirdStep.setContent(thirdStepContent);
+        Node thirdStepContent = ExaminationAuxiliaryVBox(vetNotes, head_statusField, eyes_statusField, beak_statusField, neck_statusField, nose_statusField, fins_statusField, tail_statusField, checkbox);
+        thirdStep.setContent(thirdStepContent);
         thirdStep.getValidator().constraint("Please tick the box to confirm the data is correct", checkbox.selectedProperty());
 
         return List.of(firstStep, secondStep, thirdStep);

@@ -50,7 +50,9 @@ public class updateExamination implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DataController dc = DataController.getInstance();
-        List<MFXStepperToggle> toggles = StepperCreationAuxiliary();
+        GUIUtilsController guic = new GUIUtilsController();
+        List<MFXStepperToggle> toggles = guic.ExaminationAuxStepperCreation(vetNotes, head_statusField, eyes_statusField, beak_statusField, neck_statusField, nose_statusField, fins_statusField, tail_statusField, checkbox);
+
         head_statusField.setFloatingText("Head status");
 
         head_statusField.setPromptText(String.valueOf(dc.getSelectedExamination().getHead_status()));
@@ -83,39 +85,5 @@ public class updateExamination implements Initializable {
                 }
             }
         );
-    }
-
-    public List<MFXStepperToggle> StepperCreationAuxiliary() {
-        MFXStepperToggle firstStep = new MFXStepperToggle("Examination", new MFXFontIcon("fas-plus", 16, Color.web("#f1c40f")));
-        VBox firstStepContent = new VBox();
-        firstStepContent.setSpacing(4);
-        firstStepContent.setAlignment(Pos.CENTER);
-        ObservableList<String> status = FXCollections.observableArrayList("Compromised", "DeepWounds", "SuperficialWounds", "Normal", "Perfect");
-        head_statusField.setItems(status); eyes_statusField.setItems(status); beak_statusField.setItems(status); neck_statusField.setItems(status); nose_statusField.setItems(status); fins_statusField.setItems(status); tail_statusField.setItems(status);
-        firstStepContent.getChildren().addAll(head_statusField, eyes_statusField, beak_statusField, neck_statusField, nose_statusField, fins_statusField, tail_statusField);
-        firstStepContent.setAlignment(Pos.CENTER);
-        firstStep.setContent(firstStepContent);
-
-        MFXStepperToggle secondStep = new MFXStepperToggle("Veterinary", new MFXFontIcon("fas-stethoscope", 16, Color.web("#39beee")));
-        VBox secondStepContent = new VBox();
-        secondStepContent.setAlignment(Pos.CENTER);
-        vetNotes.setMinHeight(200);
-        vetNotes.setMinWidth(400);
-        secondStepContent.getChildren().add(vetNotes);
-        secondStep.setContent(secondStepContent);
-
-        MFXStepperToggle thirdStep = new MFXStepperToggle("Check info", new MFXFontIcon("fas-check", 16, Color.web("#ff666a")));
-        Node thirdStepContent = createCheckInfoContent();
-        thirdStep.setContent(thirdStepContent);
-        thirdStep.getValidator().constraint("Please tick the box to confirm the data is correct", checkbox.selectedProperty());
-
-        return List.of(firstStep, secondStep, thirdStep);
-    }
-
-    private Node createCheckInfoContent() {
-        GUIUtilsController guic = new GUIUtilsController();
-        VBox content = guic.ExaminationAuxiliaryVBox(vetNotes, head_statusField, eyes_statusField, beak_statusField, neck_statusField, nose_statusField, fins_statusField, tail_statusField, checkbox);
-
-        return content;
     }
 }
