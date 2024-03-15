@@ -14,6 +14,7 @@ import me.csaprotocol.tortoisehospital.exceptions.ExceptionHandler;
 import java.util.ArrayList;
 
 public class thirdColumnStatsMenu {
+    
     @FXML private MFXDatePicker startDate;
     @FXML private HBox lowerHBox;
     @FXML private MFXDatePicker endDate;

@@ -2,7 +2,6 @@ package me.csaprotocol.tortoisehospital.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.csaprotocol.tortoisehospital.entities.enums.Profile;
 
 import java.time.LocalDate;
 
@@ -13,7 +12,7 @@ public class Employee {
     private String name;
     private String lastName;
     private LocalDate birthDate;
-    private Profile profileType;
+    private char profileType;
 
     @Override
     public String toString() {
@@ -33,7 +32,7 @@ public class Employee {
         Employee employee = (Employee) obj;
         return employee.ID.equals(this.ID) && employee.name.equals(this.name)
             && employee.lastName.equals(this.lastName) && employee.birthDate.equals(this.birthDate)
-            && employee.profileType.equals(this.profileType);
+            && employee.profileType == this.profileType;
     }
 
 }

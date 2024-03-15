@@ -153,7 +153,6 @@ public class ControllerOrchestrator {
 
     public void showLoginGUI(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("resources/fxml/login.fxml"));
-
         try {
             showNewGUI(stage, fxmlLoader);
         } catch (CoreException e) {

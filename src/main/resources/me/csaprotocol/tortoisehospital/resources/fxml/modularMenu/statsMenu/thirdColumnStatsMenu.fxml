@@ -12,8 +12,8 @@
       <Label layoutX="14.0" layoutY="444.0" prefHeight="17.0" prefWidth="189.0" text="CoxComb chart for selected center" textFill="#aeaeae" />
       <HBox fx:id="upperHBox" layoutX="11.0" layoutY="153.0" prefHeight="283.0" prefWidth="336.0" />
       <HBox fx:id="lowerHBox" layoutX="14.0" layoutY="477.0" prefHeight="283.0" prefWidth="336.0" />
-      <MFXDatePicker fx:id="firstDate" layoutX="8.0" layoutY="14.0" prefHeight="38.0" prefWidth="107.0" />
-      <MFXDatePicker fx:id="secondDate" layoutX="139.0" layoutY="14.0" prefHeight="38.0" prefWidth="107.0" />
+      <MFXDatePicker fx:id="startDate" layoutX="8.0" layoutY="14.0" prefHeight="38.0" prefWidth="107.0" />
+      <MFXDatePicker fx:id="endDate" layoutX="139.0" layoutY="14.0" prefHeight="38.0" prefWidth="107.0" />
       <MFXButton fx:id="showCenterStatsButton" layoutX="270.0" layoutY="14.0" onMouseClicked="#onShowStatsClick" prefHeight="38.0" prefWidth="85.0" text="Show stats" />
    </children>
 </Pane>

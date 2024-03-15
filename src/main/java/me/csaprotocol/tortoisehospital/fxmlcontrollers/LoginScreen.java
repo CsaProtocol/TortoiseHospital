@@ -13,7 +13,7 @@ import me.csaprotocol.tortoisehospital.controllers.LoginController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Login implements Initializable {
+public class LoginScreen implements Initializable {
 
     @FXML private TextField employeeIDField;
     @FXML private PasswordField employeePasswordField;
@@ -24,11 +24,11 @@ public class Login implements Initializable {
     void loginActionHandler(ActionEvent event) {
 
         LoginController loginControllerReference = new LoginController();
-        ControllerOrchestrator controllerOrchestratorReference = new ControllerOrchestrator();
 
         if(loginControllerReference.handleLogin(employeeIDField.getText(), employeePasswordField.getText())) {
-            controllerOrchestratorReference.showUserMenuGUI();
-            controllerOrchestratorReference.closeStageByEvent(event);
+            ControllerOrchestrator co = new ControllerOrchestrator();
+            co.showUserMenuGUI();
+            co.closeStageByEvent(event);
         } else {
             unsuccessfulLoginLabel.setVisible(true);
             employeeIDField.clear();

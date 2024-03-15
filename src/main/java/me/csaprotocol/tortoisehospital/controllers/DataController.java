@@ -1,7 +1,6 @@
 package me.csaprotocol.tortoisehospital.controllers;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +28,7 @@ public class DataController {
     private @Getter @Setter Turtle selectedTurtle;
     private @Getter @Setter MedicalRecord selectedMedicalRecord;
     private @Getter @Setter Examination selectedExamination;
+    private @Getter @Setter Measurement selectedMeasurement;
 
     private DataController() {}
 
