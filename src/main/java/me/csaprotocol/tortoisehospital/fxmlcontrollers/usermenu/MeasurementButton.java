@@ -17,7 +17,7 @@ import me.csaprotocol.tortoisehospital.events.eventbuses.EventBus;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class measurementButton implements Initializable {
+public class MeasurementButton implements Initializable {
 
     @FXML private Pane measurementPane;
     @FXML private Label dateLabel;

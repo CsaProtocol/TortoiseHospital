@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="fourthColumn" prefHeight="800.0" prefWidth="451.0" style="-fx-background-color: #1E1E1E; -fx-border-color: #1A1A1A; -fx-border-style: solid hidden solid solid; -fx-border-insets: 1 0 0 0;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.fourthColumnTurtleMenu">
+<Pane fx:id="fourthColumn" prefHeight="800.0" prefWidth="451.0" style="-fx-background-color: #1E1E1E; -fx-border-color: #1A1A1A; -fx-border-style: solid hidden solid solid; -fx-border-insets: 1 0 0 0;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu.FourthColumnTurtleMenu">
    <children>
       <MFXScrollPane fx:id="scrollPaneMedicalRecord" layoutY="43.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="104.0" prefWidth="451.0" styleClass="mfx-scroll-pane" stylesheets="@../../../css/mfxscrollpane.css" vbarPolicy="NEVER">
          <content>

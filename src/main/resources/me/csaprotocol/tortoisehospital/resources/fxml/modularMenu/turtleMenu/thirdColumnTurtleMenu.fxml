@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="thirdColumn" prefHeight="800.0" prefWidth="363.0" style="-fx-border-color: #111111; -fx-border-style: solid solid solid solid; -fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.thirdColumnTurtleMenu">
+<Pane fx:id="thirdColumn" prefHeight="800.0" prefWidth="363.0" style="-fx-border-color: #111111; -fx-border-style: solid solid solid solid; -fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu.ThirdColumnTurtleMenu">
    <children>
       <Label layoutX="13.0" layoutY="22.0" prefHeight="17.0" prefWidth="107.0" text="Selected turtle" textFill="#aeaeae" />
       <Button fx:id="deleteSelectedTurtleButton" layoutX="281.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#onDeleteSelectedTurtleClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">

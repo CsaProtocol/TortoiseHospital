@@ -17,7 +17,7 @@ import me.csaprotocol.tortoisehospital.events.eventbuses.EventBus;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class examinationButton implements Initializable {
+public class ExaminationButton implements Initializable {
 
     @FXML private Label examinationDate;
     @FXML private Pane examinationPane;

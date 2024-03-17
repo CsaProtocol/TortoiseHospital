@@ -13,7 +13,7 @@ import me.csaprotocol.tortoisehospital.events.eventbuses.EventBus;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class tankButton implements Initializable {
+public class TankButton implements Initializable {
 
     @FXML private Button buttonId;
     private boolean isSelected = false;

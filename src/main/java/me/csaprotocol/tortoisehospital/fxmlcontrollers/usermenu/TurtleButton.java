@@ -15,7 +15,7 @@ import me.csaprotocol.tortoisehospital.events.eventbuses.EventBus;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class turtleButton implements Initializable {
+public class TurtleButton implements Initializable {
 
     @Setter private boolean isSelected = false;
     @FXML private Label idTurtleLabel;

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import me.csaprotocol.tortoisehospital.daos.EmployeeDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
+import me.csaprotocol.tortoisehospital.exceptions.DAOException;
 
 public class EmployeeDAOPostgres extends PostgresDAO implements EmployeeDAO {
 
@@ -28,7 +29,7 @@ public class EmployeeDAOPostgres extends PostgresDAO implements EmployeeDAO {
                 return false;
             }
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
 
         return true;

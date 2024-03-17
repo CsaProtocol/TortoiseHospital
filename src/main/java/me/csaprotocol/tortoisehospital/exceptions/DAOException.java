@@ -1,6 +1,6 @@
 package me.csaprotocol.tortoisehospital.exceptions;
 
-public class DAOException extends Exception {
+public class DAOException extends RuntimeException {
     public DAOException() {
         super();
     }

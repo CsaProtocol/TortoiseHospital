@@ -1,18 +1,9 @@
 package me.csaprotocol.tortoisehospital.fxmlcontrollers.steppers;
 
 import io.github.palexdev.materialfx.controls.*;
-import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
 import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 
@@ -20,7 +11,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class newExamination implements Initializable {
+public class NewExamination implements Initializable {
     private final MFXComboBox<String> head_statusField;
     private final MFXComboBox<String> eyes_statusField;
     private final MFXComboBox<String> beak_statusField;
@@ -33,7 +24,7 @@ public class newExamination implements Initializable {
 
     @FXML private MFXStepper stepper;
 
-    public newExamination() {
+    public NewExamination() {
         head_statusField = new MFXComboBox<>();
         eyes_statusField = new MFXComboBox<>();
         beak_statusField = new MFXComboBox<>();

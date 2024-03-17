@@ -1,4 +1,4 @@
-package me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu;
+package me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu;
 
 import eu.hansolo.fx.charts.*;
 import eu.hansolo.fx.charts.data.XYChartItem;
@@ -20,8 +20,7 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.ResourceBundle;
 
-
-public class fourthColumnStatsMenu implements Initializable {
+public class FourthColumnStatsMenu implements Initializable {
 
     @FXML private MFXDatePicker endDate;
     @FXML private Pane fourthColumn;
@@ -44,9 +43,6 @@ public class fourthColumnStatsMenu implements Initializable {
         XYSeries<XYChartItem> xySeries;
 
         try {
-            if(startDate.getValue() == null || endDate.getValue() == null) {
-                throw new CoreException("Please select a date range to view the stats");
-            }
             if(startDate.getValue().isAfter(endDate.getValue())) {
                 throw new CoreException("Start date cannot be after end date");
             }

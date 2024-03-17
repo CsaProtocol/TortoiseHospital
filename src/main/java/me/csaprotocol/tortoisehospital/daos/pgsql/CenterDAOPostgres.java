@@ -3,6 +3,7 @@ package me.csaprotocol.tortoisehospital.daos.pgsql;
 import me.csaprotocol.tortoisehospital.daos.CenterDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Center;
+import me.csaprotocol.tortoisehospital.exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +46,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
                 );
             }
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
 
         return centers;
@@ -78,7 +79,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
         return null;
     }
@@ -102,7 +103,7 @@ public class CenterDAOPostgres extends PostgresDAO implements CenterDAO {
             values[3] = rs.getInt("normal_t");
             values[4] = rs.getInt("perfect_t");
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
         return values;
     }

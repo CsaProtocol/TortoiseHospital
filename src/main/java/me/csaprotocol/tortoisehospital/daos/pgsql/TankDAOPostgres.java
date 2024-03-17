@@ -3,6 +3,7 @@ package me.csaprotocol.tortoisehospital.daos.pgsql;
 import me.csaprotocol.tortoisehospital.daos.TankDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Tank;
+import me.csaprotocol.tortoisehospital.exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class TankDAOPostgres extends PostgresDAO implements TankDAO {
                 );
             } return tanks;
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -56,7 +57,7 @@ public class TankDAOPostgres extends PostgresDAO implements TankDAO {
                 );
             } return null;
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 }

@@ -3,6 +3,7 @@ package me.csaprotocol.tortoisehospital.daos.pgsql;
 import me.csaprotocol.tortoisehospital.daos.MedicalRecordDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.MedicalRecord;
+import me.csaprotocol.tortoisehospital.exceptions.DAOException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -40,7 +41,7 @@ public class MedicalRecordDAOPostgres extends PostgresDAO implements MedicalReco
 
             return medicalRecords;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -59,7 +60,7 @@ public class MedicalRecordDAOPostgres extends PostgresDAO implements MedicalReco
             rs.next();
             return rs.getString("internal_id");
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -73,7 +74,7 @@ public class MedicalRecordDAOPostgres extends PostgresDAO implements MedicalReco
             st.setString(2, internalID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -86,7 +87,7 @@ public class MedicalRecordDAOPostgres extends PostgresDAO implements MedicalReco
             st.setString(1, internalID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 }

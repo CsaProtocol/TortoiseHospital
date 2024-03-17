@@ -4,6 +4,7 @@ import io.github.palexdev.mfxeffects.ripple.base.Ripple;
 import me.csaprotocol.tortoisehospital.daos.MeasurementDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Measurement;
+import me.csaprotocol.tortoisehospital.exceptions.DAOException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
             return measurements;
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -57,7 +58,7 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
             st.setDate(5, java.sql.Date.valueOf(measurement.getDate()));
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -71,7 +72,7 @@ public class MeasurementDAOPostgres extends PostgresDAO implements MeasurementDA
             st.setDate(2, Date.valueOf(date));
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 }

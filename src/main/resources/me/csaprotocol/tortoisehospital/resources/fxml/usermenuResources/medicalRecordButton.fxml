@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="medicalRecordPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClick" onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit" prefHeight="88.0" prefWidth="78.0" style="-fx-background-color: #282828; -fx-background-radius: 1em; -fx-border-radius: 1em;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.medicalRecordButton">
+<Pane fx:id="medicalRecordPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClick" onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit" prefHeight="88.0" prefWidth="78.0" style="-fx-background-color: #282828; -fx-background-radius: 1em; -fx-border-radius: 1em;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.MedicalRecordButton">
    <children>
       <Label fx:id="admissionDateLabel" layoutX="8.0" layoutY="57.0" text="2022-01-15" textFill="#aeaeae" />
       <Label fx:id="dischargeDateLabel" layoutX="8.0" layoutY="69.0" text="N/A" textFill="#aeaeae" />

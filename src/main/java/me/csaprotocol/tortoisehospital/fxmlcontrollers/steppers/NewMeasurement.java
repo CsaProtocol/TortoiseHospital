@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
@@ -18,14 +17,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class newMeasurement implements Initializable {
+public class NewMeasurement implements Initializable {
     private final MFXDatePicker measurementDateField;
     private final MFXTextField widthField;
     private final MFXTextField lengthField;
     private final MFXTextField weightField;
     private final MFXCheckbox checkbox;
     @FXML private MFXStepper stepper;
-    public newMeasurement() {
+    public NewMeasurement() {
         measurementDateField = new MFXDatePicker();
         widthField = new MFXTextField();
         lengthField = new MFXTextField();

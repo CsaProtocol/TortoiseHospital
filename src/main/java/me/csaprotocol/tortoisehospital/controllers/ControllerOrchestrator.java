@@ -19,8 +19,8 @@ import me.csaprotocol.tortoisehospital.entities.enums.Sex;
 import me.csaprotocol.tortoisehospital.exceptions.CoreException;
 import me.csaprotocol.tortoisehospital.exceptions.ExceptionHandler;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.dialogUtil;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.fourthColumnTurtleMenu;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu.thirdColumnTurtleMenu;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu.FourthColumnTurtleMenu;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu.ThirdColumnTurtleMenu;
 import me.csaprotocol.tortoisehospital.fxmlcontrollers.userMenu;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
@@ -296,7 +296,7 @@ public class ControllerOrchestrator {
     }
 
     public void showMeasurementGUI() {
-        thirdColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneThirdColumn().getController();
+        ThirdColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneThirdColumn().getController();
         DaoController dco = new DaoController();
         ArrayList<Measurement> measurementArrayList = dco.getMeasurementsByTurtleId(data.getSelectedTurtle().getID());
         currentSubSceneController.clearMeasurementButtons();
@@ -307,7 +307,7 @@ public class ControllerOrchestrator {
     }
 
     public void showMedicalRecordGUI() {
-        fourthColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        FourthColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneFourthColumn().getController();
         DaoController dco = new DaoController();
         ArrayList<MedicalRecord> mrList = dco.getMedicalRecordsByTurtleID(data.getSelectedTurtle().getID());
         currentSubSceneController.clearMedicalRecordButtons();
@@ -318,7 +318,7 @@ public class ControllerOrchestrator {
     }
 
     public void showExaminationsGUI(MedicalRecord mr) {
-        fourthColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        FourthColumnTurtleMenu currentSubSceneController = data.getCurrentSubSceneFourthColumn().getController();
         DaoController dco = new DaoController();
         ArrayList<Examination> examinationArrayList = dco.getExaminationsByMedicalRecordID(mr.getInternalID());
         currentSubSceneController.clearExaminationButtons();
@@ -361,7 +361,7 @@ public class ControllerOrchestrator {
         DaoController dco = new DaoController();
         Object[] TurtleAndTank = dco.getTurtleAndTankByID(turtleID);
         data.setSelectedTurtle((Turtle) TurtleAndTank[0]);
-        thirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
+        ThirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
         subSceneController.setTurtleIDLabel(data.getSelectedTurtle().getID());
         subSceneController.setSpeciesLabel(data.getSelectedTurtle().getSpecies());
         subSceneController.setTurtleNameLabel(data.getSelectedTurtle().getName());
@@ -387,7 +387,7 @@ public class ControllerOrchestrator {
     }
 
     public void setSelectedMeasurement(Measurement measurementToFocus) {
-        thirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
+        ThirdColumnTurtleMenu subSceneController = data.getCurrentSubSceneThirdColumn().getController();
         subSceneController.setLengthLabel(String.valueOf(measurementToFocus.getLength()));
         subSceneController.setMeasurementDateLabel(measurementToFocus.getDate().toString());
         subSceneController.setWeightLabel(String.valueOf(measurementToFocus.getWeight()));
@@ -396,7 +396,7 @@ public class ControllerOrchestrator {
 
     public void setSelectedMedicalRecord(MedicalRecord mr) {
         data.setSelectedMedicalRecord(mr);
-        fourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        FourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
         subSceneController.setLocationLabel(mr.getLatitude() + ", " + mr.getLongitude());
         subSceneController.setDischargeDateLabel(mr.getRelease_date());
         subSceneController.setAdmissionDateLabel(mr.getAccess_date().toString());
@@ -407,7 +407,7 @@ public class ControllerOrchestrator {
 
     public void setSelectedExamination(Examination ex) {
         data.setSelectedExamination(ex);
-        fourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
+        FourthColumnTurtleMenu subSceneController = data.getCurrentSubSceneFourthColumn().getController();
         subSceneController.setExaminationDateLabel(ex.getDate().toString());
         subSceneController.setVetNotesLabel(ex.getVet_notes());
         subSceneController.setExaminationCirclesColor(subSceneController.getHeadCircle(), ex.getHead_status().getColor());

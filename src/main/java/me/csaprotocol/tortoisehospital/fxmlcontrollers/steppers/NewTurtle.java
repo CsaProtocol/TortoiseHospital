@@ -1,6 +1,7 @@
 package me.csaprotocol.tortoisehospital.fxmlcontrollers.steppers;
 
 import io.github.palexdev.materialfx.controls.*;
+import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -15,15 +16,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
 import me.csaprotocol.tortoisehospital.controllers.DaoController;
-import me.csaprotocol.tortoisehospital.controllers.DataController;
-import me.csaprotocol.tortoisehospital.entities.Turtle;
-import me.csaprotocol.tortoisehospital.entities.enums.Sex;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class updateTurtle implements Initializable {
+public class NewTurtle implements Initializable {
     private final MFXTextField turtleNameField;
     private final MFXComboBox<String> speciesField;
     private final MFXComboBox<String> sexField;
@@ -31,7 +29,7 @@ public class updateTurtle implements Initializable {
     @FXML private MFXStepper stepper;
     @FXML private GridPane grid;
 
-    public updateTurtle() {
+    public NewTurtle() {
         turtleNameField = new MFXTextField();
         speciesField = new MFXComboBox<>();
         sexField = new MFXComboBox<>();
@@ -41,45 +39,26 @@ public class updateTurtle implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DataController dataController = DataController.getInstance();
+        MFXStageDialog dialog = new MFXStageDialog();
+        dialog.setOwnerNode(grid);
 
-        turtleNameField.setPrefWidth(200);
-        turtleNameField.setMinWidth(Region.USE_PREF_SIZE);
-        turtleNameField.setMaxWidth(Region.USE_PREF_SIZE);
-        turtleNameField.setMinHeight(40);
-        turtleNameField.setMaxHeight(40);
-
-        turtleNameField.setFloatingText("Turtle Name");
-        turtleNameField.setPromptText(dataController.getSelectedTurtle().getName());
-
-
-        speciesField.setPrefWidth(200);
-        speciesField.setMinWidth(Region.USE_PREF_SIZE);
-        speciesField.setMaxWidth(Region.USE_PREF_SIZE);
-        speciesField.setMinHeight(40);
-        speciesField.setMaxHeight(40);
+        turtleNameField.setPromptText("Turtle Name");
+        turtleNameField.getValidator().constraint("Turtle name field can't be empty", turtleNameField.textProperty().length().greaterThanOrEqualTo(1));
 
         speciesField.setItems(FXCollections.observableArrayList("Chelonia mydas","Eretmochelys imbricata","Dermochelys coriacea","Caretta caretta","Natator depressus","Testudo graeca","Chrysemys picta","Trachemys scripta","Emys orbicularis","Kinosternon scorpioides"));
-        speciesField.setFloatingText("Species");
-        speciesField.setPromptText(dataController.getSelectedTurtle().getSpecies());
+        speciesField.setPromptText("Species");
+        speciesField.getValidator().constraint("Species field can't be empty", speciesField.valueProperty().isNotNull());
 
-
-        sexField.setPrefWidth(200);
-        sexField.setMinWidth(Region.USE_PREF_SIZE);
-        sexField.setMaxWidth(Region.USE_PREF_SIZE);
-        sexField.setMinHeight(40);
-        sexField.setMaxHeight(40);
-
-        sexField.setFloatingText("Sex");
         sexField.setItems(FXCollections.observableArrayList("Male", "Female"));
-        sexField.setPromptText(dataController.getSelectedTurtle().getSex().toString());
+        sexField.setPromptText("Sex");
+        sexField.getValidator().constraint("Sex field can't be empty", sexField.valueProperty().isNotNull());
 
         List<MFXStepperToggle> toggles = stepperCreationAuxiliary();
         stepper.getStepperToggles().addAll(toggles);
     }
 
     private List<MFXStepperToggle> stepperCreationAuxiliary() {
-        MFXStepperToggle firstStep = new MFXStepperToggle("Update info", new MFXFontIcon("fas-plus", 16, Color.web("#58f46c")));
+        MFXStepperToggle firstStep = new MFXStepperToggle("Turtle info", new MFXFontIcon("fas-plus", 16, Color.web("#58f46c")));
         VBox firstStepContent = new VBox(20, turtleNameField, speciesField, sexField);
         firstStepContent.setSpacing(5);
         firstStepContent.setAlignment(Pos.CENTER);
@@ -130,13 +109,11 @@ public class updateTurtle implements Initializable {
         stepper.setOnLastNext(
             event -> {
                 if (checkbox.isSelected()) {
-                    Sex sex;
-                    if(sexField.getValue().equals("Male")) {
-                        sex = Sex.Male;
-                    } else { sex = Sex.Female; }
+                    DaoController dc = new DaoController();
+                    String turtleID = dc.createTurtle(turtleNameField.getText(), speciesField.getValue(), sexField.getValue());
 
                     ControllerOrchestrator co = new ControllerOrchestrator();
-                    co.handleTurtleUpdate(turtleNameField.getText(), speciesField.getValue(), sex);
+                    co.handleNewTurtle(turtleID);
                 }
             });
 

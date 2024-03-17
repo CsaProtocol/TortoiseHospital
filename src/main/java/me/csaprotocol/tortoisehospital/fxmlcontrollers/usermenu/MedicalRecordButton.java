@@ -17,7 +17,7 @@ import me.csaprotocol.tortoisehospital.events.eventbuses.EventBus;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class medicalRecordButton implements Initializable {
+public class MedicalRecordButton implements Initializable {
 
     @FXML private Label admissionDateLabel;
     @FXML private Label dischargeDateLabel;

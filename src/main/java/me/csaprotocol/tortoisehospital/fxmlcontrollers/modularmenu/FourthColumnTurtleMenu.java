@@ -1,8 +1,7 @@
-package me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu;
+package me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu;
 
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -10,28 +9,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import lombok.Data;
 import lombok.Getter;
-import me.csaprotocol.tortoisehospital.Main;
 import me.csaprotocol.tortoisehospital.controllers.ControllerOrchestrator;
-import me.csaprotocol.tortoisehospital.controllers.DataController;
 import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 import me.csaprotocol.tortoisehospital.entities.Examination;
 import me.csaprotocol.tortoisehospital.entities.MedicalRecord;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.dialogUtil;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.examinationButton;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.medicalRecordButton;
-import org.controlsfx.control.PopOver;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class fourthColumnTurtleMenu implements Initializable {
+public class FourthColumnTurtleMenu implements Initializable {
 
     //First row: Medical Records
     @FXML private Pane fourthColumn;

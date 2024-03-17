@@ -1,7 +1,5 @@
-package me.csaprotocol.tortoisehospital.fxmlcontrollers.modularMenu;
+package me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu;
 
-import eu.hansolo.fx.charts.ConcentricRingChart;
-import eu.hansolo.fx.charts.data.ChartItem;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
@@ -11,9 +9,7 @@ import me.csaprotocol.tortoisehospital.controllers.GUIUtilsController;
 import me.csaprotocol.tortoisehospital.exceptions.CoreException;
 import me.csaprotocol.tortoisehospital.exceptions.ExceptionHandler;
 
-import java.util.ArrayList;
-
-public class thirdColumnStatsMenu {
+public class ThirdColumnStatsMenu {
     
     @FXML private MFXDatePicker startDate;
     @FXML private HBox lowerHBox;

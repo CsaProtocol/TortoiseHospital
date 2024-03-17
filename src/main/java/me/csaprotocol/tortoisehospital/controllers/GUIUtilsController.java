@@ -33,10 +33,10 @@ import me.csaprotocol.tortoisehospital.entities.Examination;
 import me.csaprotocol.tortoisehospital.entities.Measurement;
 import me.csaprotocol.tortoisehospital.entities.MedicalRecord;
 import me.csaprotocol.tortoisehospital.exceptions.CoreException;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.examinationButton;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.measurementButton;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.medicalRecordButton;
-import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.turtleButton;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.ExaminationButton;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.MeasurementButton;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.MedicalRecordButton;
+import me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.TurtleButton;
 import org.controlsfx.control.PopOver;
 
 import java.io.IOException;
@@ -73,7 +73,7 @@ public class GUIUtilsController {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/turtleButton.fxml")));
             newButton = loader.load();
-            turtleButton co = loader.getController();
+            TurtleButton co = loader.getController();
             co.setIdTurtleLabel(TurtleID);
             co.setNameTurtleLabel(TurtleName);
         } catch (IOException e) {
@@ -87,7 +87,7 @@ public class GUIUtilsController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/measurementButton.fxml")));
             newButton = fxmlLoader.load();
-            measurementButton fxmlCo = fxmlLoader.getController();
+            MeasurementButton fxmlCo = fxmlLoader.getController();
             fxmlCo.setDateLabel(measurement.getDate().toString());
             fxmlCo.setMeasurementAssociated(measurement);
         } catch (IOException e) {
@@ -101,7 +101,7 @@ public class GUIUtilsController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/medicalRecordButton.fxml")));
             newButton = fxmlLoader.load();
-            medicalRecordButton fxmlCo = fxmlLoader.getController();
+            MedicalRecordButton fxmlCo = fxmlLoader.getController();
             fxmlCo.setMedicalRecord(medicalRecordToDisplay);
             fxmlCo.setAdmissionDateLabel(medicalRecordToDisplay.getAccess_date().toString());
             if(medicalRecordToDisplay.getRelease_date() != null)
@@ -119,7 +119,7 @@ public class GUIUtilsController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("resources/fxml/usermenuResources/examinationButton.fxml")));
             newButton = fxmlLoader.load();
-            examinationButton fxmlCo = fxmlLoader.getController();
+            ExaminationButton fxmlCo = fxmlLoader.getController();
             fxmlCo.setAssociatedExamination(examinationToDisplay);
             fxmlCo.setExaminationDate(examinationToDisplay.getDate().toString());
         } catch (IOException e) {

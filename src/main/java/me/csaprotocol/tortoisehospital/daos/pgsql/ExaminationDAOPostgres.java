@@ -6,6 +6,7 @@ import me.csaprotocol.tortoisehospital.daos.ExaminationDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Examination;
 import me.csaprotocol.tortoisehospital.entities.enums.Status;
+import me.csaprotocol.tortoisehospital.exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,7 +48,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
                 examinations.add(ex);
             }
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
         return examinations;
     }
@@ -71,7 +72,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
             st.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -95,7 +96,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
             st.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -111,7 +112,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
             st.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -133,7 +134,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
                 stats.add(new XYChartItem(epoch, avghealth.getValue()));
             }
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
         return stats;
     }

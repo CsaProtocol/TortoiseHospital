@@ -4,6 +4,7 @@ import me.csaprotocol.tortoisehospital.daos.TurtleDAO;
 import me.csaprotocol.tortoisehospital.daos.pgsql.jdbc.PostgresDAO;
 import me.csaprotocol.tortoisehospital.entities.Turtle;
 import me.csaprotocol.tortoisehospital.entities.enums.Sex;
+import me.csaprotocol.tortoisehospital.exceptions.DAOException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             }
             return turtles;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -73,7 +74,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
 
                 }
             } catch (SQLException e) {
-                throw new RuntimeException();
+                throw new DAOException("Error while getting centers by employee ID", e);
             }
         return new Object[0];
     }
@@ -108,7 +109,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
         return turtles;
     }
@@ -131,7 +132,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
 
         return turtles;
@@ -155,7 +156,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             return rs.getString("turtle_id");
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -171,7 +172,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             st.setString(3, turtleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -191,7 +192,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             st.setString(4, turtleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
 
@@ -205,7 +206,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
             st.setString(1, turtleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
     }
     @Override
@@ -226,7 +227,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
                 );
             }
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
         return turtles;
     }
@@ -254,7 +255,7 @@ public class TurtleDAOPostgres extends PostgresDAO implements TurtleDAO {
                 return turtle;
             }
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new DAOException("Error while getting centers by employee ID", e);
         }
         return null;
     }

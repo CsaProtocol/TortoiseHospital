@@ -3,7 +3,6 @@ package me.csaprotocol.tortoisehospital.fxmlcontrollers.steppers;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class newMedicalRecord implements Initializable {
+public class NewMedicalRecord implements Initializable {
     private final MFXComboBox<String> tankField;
     private final MFXComboBox<String> centerField;
     private final MFXDatePicker accessDateField;
@@ -34,7 +33,7 @@ public class newMedicalRecord implements Initializable {
     @FXML private MFXStepper stepper;
     @FXML private GridPane grid;
 
-    public newMedicalRecord() {
+    public NewMedicalRecord() {
         tankField = new MFXComboBox<>();
         centerField = new MFXComboBox<>();
         accessDateField = new MFXDatePicker();
