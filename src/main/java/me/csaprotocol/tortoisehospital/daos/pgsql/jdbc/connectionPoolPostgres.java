@@ -13,7 +13,7 @@ public class connectionPoolPostgres {
 
     private void initializeConnectionPoolPostgres() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/TortoiseHospital");
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/tortoisehospital");
         config.setUsername("postgres");
         config.setPassword("edugau01");
         config.setMaximumPoolSize(100);
