@@ -118,7 +118,7 @@ public class ExaminationDAOPostgres extends PostgresDAO implements ExaminationDA
 
     @Override
     public ObservableList<XYChartItem> createTurtleStats(String turtleID, LocalDate startDate, LocalDate endDate) {
-        String query = "SELECT AvgHealth, ex_date FROM examination INNER JOIN medical_record ON examination.internal_id = medical_record.internal_id WHERE ex_date BETWEEN ? AND ? AND turtle_id = ?";
+        String query = "SELECT AvgHealth, ex_date FROM examination INNER JOIN medical_record ON examination.internal_id = medical_record.internal_id WHERE ex_date BETWEEN ? AND ? AND turtle_id = ? ORDER BY ex_date ASC";
         ObservableList<XYChartItem> stats = new ObservableList<>();
         try {
             Connection conn = commonDataSource.getConnection();
