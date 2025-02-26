@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="medicalRecordPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClick" onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit" prefHeight="88.0" prefWidth="78.0" style="-fx-background-color: #282828; -fx-background-radius: 1em; -fx-border-radius: 1em;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.MedicalRecordButton">
+   <children>
+      <Label fx:id="admissionDateLabel" layoutX="8.0" layoutY="57.0" text="2022-01-15" textFill="#aeaeae" />
+      <Label fx:id="dischargeDateLabel" layoutX="8.0" layoutY="69.0" text="N/A" textFill="#aeaeae" />
+      <ImageView fitHeight="57.0" fitWidth="51.0" layoutX="18.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/diagnosis.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

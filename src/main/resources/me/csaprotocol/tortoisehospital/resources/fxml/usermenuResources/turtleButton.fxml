@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="turtleID" onMouseClicked="#onTurtleClick" onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit" prefHeight="50.0" prefWidth="261.0" style="-fx-background-color: #1E1E1E; -fx-border-radius: 10;" styleClass="root" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.usermenu.TurtleButton">
+   <children>
+      <ImageView fitHeight="37.0" fitWidth="42.0" layoutX="27.599998474121094" layoutY="5.800000190734863" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/Turtle.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="nameTurtleLabel" layoutX="88.0" layoutY="8.0" text="Name" textFill="#f1f2f3">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="idTurtleLabel" layoutX="88.0" layoutY="23.0" text="ID" textFill="#f1f2f3">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

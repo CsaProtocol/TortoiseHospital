@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="thirdColumn" prefHeight="889.0" prefWidth="363.0" style="-fx-border-color: #111111; -fx-border-style: solid solid solid solid; -fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu.ThirdColumnTurtleMenu">
+   <children>
+      <Label layoutX="13.0" layoutY="22.0" prefHeight="17.0" prefWidth="107.0" text="Selected turtle" textFill="#aeaeae" />
+      <Button fx:id="deleteSelectedTurtleButton" layoutX="281.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#onDeleteSelectedTurtleClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="updateSelectedTurtleButton" layoutX="317.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#onUpdateTurtleButtonClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/update.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Pane fx:id="selectedTurtlePanel" layoutX="12.0" layoutY="44.0" prefHeight="222.0" prefWidth="338.0" styleClass="turtle-pane" stylesheets="@../../../css/usermenuPanel.css">
+         <children>
+            <Pane layoutX="134.0" prefHeight="222.0" prefWidth="204.0" style="-fx-background-color: #393D5A;">
+               <children>
+                  <Label fx:id="centerIDLabel" layoutX="82.0" layoutY="82.0" text="Center: CTR0000001" textFill="#aeaeae" />
+                  <Label fx:id="tankIDLabel" layoutX="83.0" layoutY="100.0" text="Tank: 4" textFill="#aeaeae" />
+                  <Label fx:id="speciesLabel" layoutX="5.0" layoutY="181.0" text="Species: Kinosternon scorpioides" textFill="#aeaeae" />
+                  <Label fx:id="turtleNameLabel" layoutX="14.0" layoutY="24.0" prefHeight="18.0" prefWidth="100.0" text="Turtle" textFill="#f4f4f4">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="turtleIDLabel" layoutX="14.0" layoutY="39.0" prefHeight="17.0" prefWidth="115.0" text="Please select a turtle" textFill="#aeaeae" />
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="-20.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/selectedTurtleLogo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="genderImg" fitHeight="25.0" fitWidth="30.0" layoutX="167.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/male.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <MFXScrollPane fx:id="scrollPaneMeasurement" layoutY="384.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="104.0" prefWidth="363.0" styleClass="mfx-scroll-pane-third-column" stylesheets="@../../../css/mfxscrollpane.css" vbarPolicy="NEVER">
+         <content>
+            <HBox fx:id="measurementBox" prefHeight="107.0" prefWidth="774.0" styleClass="hbox" stylesheets="@../../../css/mfxscrollpane.css" />
+         </content>
+      </MFXScrollPane>
+      <Label layoutX="12.0" layoutY="362.0" prefHeight="17.0" prefWidth="107.0" text="Measurements" textFill="#aeaeae" />
+      <Pane fx:id="selectedMeasurementPanel" layoutX="13.0" layoutY="551.0" prefHeight="237.0" prefWidth="338.0" styleClass="measurement-pane" stylesheets="@../../../css/usermenuPanel.css">
+         <children>
+            <Pane layoutX="134.0" prefHeight="237.0" prefWidth="204.0" style="-fx-background-color: #393D5A;">
+               <children>
+                  <Label fx:id="widthLabel" layoutX="71.0" layoutY="52.0" text="Width: 100,52 cm" textFill="#aeaeae" />
+                  <Label fx:id="lengthLabel" layoutX="71.0" layoutY="72.0" text="Length: 100,52 cm" textFill="#aeaeae" />
+                  <Label fx:id="weightLabel" layoutX="69.0" layoutY="129.0" text="Weight: 78 Kg" textFill="#aeaeae" />
+                  <Label fx:id="measurementDateLabel" layoutX="14.0" layoutY="24.0" prefHeight="18.0" prefWidth="100.0" text="Date" textFill="#f4f4f4">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="-16.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/tape.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Label layoutX="14.0" layoutY="531.0" prefHeight="17.0" prefWidth="159.0" text="Selected measurement" textFill="#aeaeae" />
+      <Button fx:id="deleteSelectedMeasurementButton" layoutX="280.0" layoutY="519.0" mnemonicParsing="false" onMouseClicked="#onDeleteSelectedMeasurementClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="newMeasurementButton" layoutX="318.0" layoutY="519.0" mnemonicParsing="false" onMouseClicked="#onNewMeasurementClick" style="-fx-background-color: #282828; -fx-background-radius: 5;" textFill="#2b2a2a">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/plus.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</Pane>

@@ -1,2 +1,7 @@
-# TortoiseHospital
- The TortoiseHospital project is a Java app that helps manage the care and recovery of sea turtles at National Recovery Centers. It includes a GUI and a database, and allows staff to track turtle admissions, medical records, and generate monthly/annual stats.
+Welcome to the TortoiseHospital project! Our goal is to develop an information system for managing the care and recovery of sea turtles at National Recovery Centers. The system includes a relational database and a Java application with a graphical user interface (GUI) built using JavaFX.
+
+Staff members are assigned unique identification numbers and are linked to the centre's activities. When a turtle is admitted, it is assigned an internal identification number and a name. There are two types of admission: first admission for turtles without identification tags, and re-admission for turtles with tags. The veterinarian creates a medical record for the animal, including information on the species, length, width, weight, and location of discovery, as well as a description of the animal's health upon arrival. Each turtle is housed in a tank with a unique code.
+
+The system is able to generate monthly and annual statistics on the number of turtles admitted and their health status. This information is valuable for understanding trends and patterns in the care and recovery of these animals and informing future decision-making. We hope that this project will make a meaningful contribution to the conservation and protection of sea turtles.
+
+We welcome contributions and feedback from the community. Please feel free to open an issue or pull request if you have any suggestions or ideas for improving the project. Let's work together to help ensure the successful recovery and return of these amazing creatures to the wild.

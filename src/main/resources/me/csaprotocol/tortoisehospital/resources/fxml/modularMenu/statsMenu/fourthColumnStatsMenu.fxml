@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="fourthColumn" prefHeight="800.0" prefWidth="451.0" style="-fx-background-color: #1E1E1E; -fx-border-color: #1A1A1A; -fx-border-style: solid hidden solid solid; -fx-border-insets: 1 0 0 0;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu.FourthColumnStatsMenu">
+   <children>
+      <Label layoutX="14.0" layoutY="93.0" prefHeight="17.0" prefWidth="214.0" text="Health statistics for selected turtle" textFill="#aeaeae" />
+      <MFXDatePicker fx:id="startDate" layoutX="23.0" layoutY="24.0" prefHeight="38.0" prefWidth="131.0" />
+      <MFXDatePicker fx:id="endDate" layoutX="170.0" layoutY="24.0" prefHeight="38.0" prefWidth="131.0" />
+      <MFXButton fx:id="showCenterStatsButton" layoutX="340.0" layoutY="24.0" onMouseClicked="#onShowStatsClick" prefHeight="38.0" prefWidth="85.0" text="Show stats" />
+      <AnchorPane fx:id="turtleStats" layoutX="2.0" layoutY="124.0" prefHeight="388.0" prefWidth="451.0" />
+   </children>
+</Pane>
