@@ -15,15 +15,29 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>25-ea+12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>25-ea+12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>21.0.2</version>
+            <version>25-ea+12</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>21.0.2</version>
+            <version>25-ea+12</version>
         </dependency>
         <!-- Hikari ConnectionPool: https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
         <dependency>
@@ -31,11 +45,11 @@
             <artifactId>HikariCP</artifactId>
             <version>5.1.0</version>
         </dependency>
-        <!-- PostgreSQL Driver: https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.1</version>
+            <version>42.7.5</version>
         </dependency>
         <!-- Projekt Lombok: https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
@@ -62,13 +76,12 @@
             <artifactId>controlsfx</artifactId>
             <version>11.2.0</version>
         </dependency>
-        <!-- Hansolo Charts: https://mvnrepository.com/artifact/eu.hansolo.fx/charts -->
+        <!-- https://mvnrepository.com/artifact/eu.hansolo.fx/charts -->
         <dependency>
             <groupId>eu.hansolo.fx</groupId>
             <artifactId>charts</artifactId>
-            <version>21.0.7</version>
+            <version>21.0.25</version>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -90,6 +103,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.12.1</version>
                 <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.38</version>
+                        </path>
+                    </annotationProcessorPaths>
                     <source>21</source>
                     <target>21</target>
                 </configuration>
@@ -104,7 +124,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                me.csaprotocol.tortoisehospital/me.csaprotocol.tortoisehospital.HelloApplication
+                                me.csaprotocol.tortoisehospital.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

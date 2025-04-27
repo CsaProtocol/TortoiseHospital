@@ -17,7 +17,8 @@ module me.csaprotocol.tortoisehospital {
     requires org.controlsfx.controls;
     //Charts
     requires eu.hansolo.fx.charts;
-
+    requires javafx.graphics;
+    requires javafx.base;
 
     opens me.csaprotocol.tortoisehospital to javafx.fxml;
     opens me.csaprotocol.tortoisehospital.fxmlcontrollers to javafx.fxml;

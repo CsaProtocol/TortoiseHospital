@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXStepper?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="734.0" style="-fx-background-color: #404040;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.steppers.NewExamination">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="128.60001220703126" minHeight="0.0" prefHeight="25.600006103515625" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="385.2" minHeight="0.0" prefHeight="43.20000915527343" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="613.5999908447266" minHeight="10.0" prefHeight="613.5999908447266" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <MFXStepper fx:id="stepper" prefHeight="602.0" prefWidth="734.0" GridPane.rowIndex="2" />
+      <Label alignment="CENTER" prefHeight="18.0" prefWidth="756.0" text="New examination" textFill="#bcbcbc" GridPane.rowIndex="1" />
+   </children>
+</GridPane>

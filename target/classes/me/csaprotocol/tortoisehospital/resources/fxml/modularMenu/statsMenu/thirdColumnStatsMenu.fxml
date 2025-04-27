@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="thirdColumn" prefHeight="800.0" prefWidth="363.0" style="-fx-border-color: #111111; -fx-border-style: solid solid solid solid; -fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.csaprotocol.tortoisehospital.fxmlcontrollers.modularmenu.ThirdColumnStatsMenu">
+   <children>
+      <Label layoutX="11.0" layoutY="88.0" prefHeight="17.0" prefWidth="268.0" text="Concentric ring chart for selected center" textFill="#aeaeae" />
+      <Label layoutX="14.0" layoutY="444.0" prefHeight="17.0" prefWidth="229.0" text="CoxComb chart for selected center" textFill="#aeaeae" />
+      <HBox fx:id="upperHBox" layoutX="11.0" layoutY="153.0" prefHeight="283.0" prefWidth="336.0" />
+      <HBox fx:id="lowerHBox" layoutX="14.0" layoutY="477.0" prefHeight="283.0" prefWidth="336.0" />
+      <MFXDatePicker fx:id="startDate" layoutX="8.0" layoutY="24.0" prefHeight="38.0" prefWidth="107.0" />
+      <MFXDatePicker fx:id="endDate" layoutX="139.0" layoutY="24.0" prefHeight="38.0" prefWidth="107.0" />
+      <MFXButton fx:id="showCenterStatsButton" layoutX="270.0" layoutY="24.0" onMouseClicked="#onShowStatsClick" prefHeight="38.0" prefWidth="85.0" text="Show stats" />
+   </children>
+</Pane>
